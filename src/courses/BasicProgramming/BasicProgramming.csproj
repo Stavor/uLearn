@@ -71,6 +71,9 @@
     <Compile Include="Slides\U00_Basics\S100_Salary.cs" />
     <Compile Include="Slides\U00_Basics\S000_HelpSlide.cs" />
     <Compile Include="Slides\U00_Basics\_HelloWorld.cs" />
+    <None Include="Slides\U01_Mistakes\S042_TestPeerAssasment.pa">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Slides\U02_Ifs\S040_Quiz.xml">
       <SubType>Designer</SubType>
     </Content>
