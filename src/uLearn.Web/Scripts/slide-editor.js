@@ -35,6 +35,7 @@ function codeMirrorClass(c, editable) {
 
 codeMirrorClass("code-exercise", true);
 codeMirrorClass("code-sample", false);
+codeMirrorClass("markdown-input", true);
 
 function refreshPreviousDraft(ac, id) {
     window.onbeforeunload = function () {
