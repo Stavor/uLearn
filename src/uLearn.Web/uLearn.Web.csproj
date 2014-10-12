@@ -202,6 +202,7 @@
     <Compile Include="Controllers\SlideNavigationController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HintController.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepo.cs" />
     <Compile Include="Ideone\ExecutionService.Settings.Sample.cs" />
     <Compile Include="Migrations\201408220628510_AddUnitAppearance.cs" />
     <Compile Include="Migrations\201408220628510_AddUnitAppearance.Designer.cs">
@@ -228,6 +229,7 @@
     <Compile Include="Models\ChoiceGroupPageModel.cs" />
     <Compile Include="Models\CoursePageModel.cs" />
     <Compile Include="Models\HintPageModel.cs" />
+    <Compile Include="Models\PeerAssasmentAnswer.cs" />
     <Compile Include="Models\PersonalStatisticPageModel.cs" />
     <Compile Include="Models\QuizAnalyticsModel.cs" />
     <Compile Include="Models\QuizInfoModel.cs" />
