@@ -1,0 +1,32 @@
+﻿@using uLearn
+@using uLearn.PeerAssasments
+@using uLearn.Web.Controllers
+@model PeerAssasmentModel
+@{
+    var isPropositionWriting = Model.StepType == PeerAssasmentStepType.PropositionWriting;
+}
+
+@if (string.IsNullOrEmpty(Model.UserProposition))
+{
+    <p>Напишите ваш тезис</p>
+}
+else
+{
+    <p>Ваш тезис</p>
+}
+
+@Html.Raw(Model.PA.Proposition.RenderMd())
+@if(isPropositionWriting)
+{
+    <textarea class='code markdown-input'>@Model.UserProposition</textarea>
+    <div class="control-buttons">
+        <button type="button" class="submitProposition-peerAssasement-button btn btn-primary no-rounds"
+                data-url="@Url.Action("SubmitProposition", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id})">
+            SUBMIT
+        </button>
+    </div>
+}
+else
+{
+    @Html.Raw(Model.UserProposition.RenderMd())
+}

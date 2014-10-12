@@ -195,6 +195,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PeerAssasmentController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Models\CoursePageModel.cs" />
     <Compile Include="Models\HintPageModel.cs" />
     <Compile Include="Models\PeerAssasmentAnswer.cs" />
+    <Compile Include="Models\PeerAssasmentModel.cs" />
     <Compile Include="Models\PersonalStatisticPageModel.cs" />
     <Compile Include="Models\QuizAnalyticsModel.cs" />
     <Compile Include="Models\QuizInfoModel.cs" />
@@ -749,6 +751,7 @@
     <Content Include="Scripts\slide-nav.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\slide-submit.js" />
     <Content Include="Scripts\slide-tex.js" />
     <Content Include="Scripts\slide-stats.js" />
     <Content Include="Scripts\table-configurator.js" />
@@ -833,6 +836,7 @@
     <Content Include="Views\Analytics\UserSolutions.cshtml" />
     <Content Include="Views\Analytics\SystemStatistics.cshtml" />
     <Content Include="Views\Account\ChangeDetailsPartial.cshtml" />
+    <Content Include="Views\PeerAssasment\FirstPAView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
