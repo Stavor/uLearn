@@ -29,10 +29,13 @@ namespace uLearn.Web
 			bundles.Add(new ScriptBundle("~/codemirror-js").Include(
 				"~/codemirror/lib/codemirror.js",
 				"~/codemirror/mode/clike/clike.js",
+				"~/codemirror/mode/markdown/markdown.js",
+				"~/codemirror/mode/xml/xml.js",
 				"~/codemirror/addon/hint/show-hint.js",
 				"~/codemirror/addon/hint/csharp-hint.js",
 				"~/codemirror/addon/edit/closebrackets.js",
 				"~/codemirror/addon/edit/matchbrackets.js",
+				"~/codemirror/addon/edit/continuelist.js",
 				"~/codemirror/addon/selection/active-line.js"
 				));
 
