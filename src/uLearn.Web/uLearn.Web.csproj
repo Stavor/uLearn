@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201410121532547_PeerAssasment.Designer.cs">
       <DependentUpon>201410121532547_PeerAssasment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410191539264_Add_PeerAssasmentReview.cs" />
+    <Compile Include="Migrations\201410191539264_Add_PeerAssasmentReview.Designer.cs">
+      <DependentUpon>201410191539264_Add_PeerAssasmentReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AcceptedSolutionsPageModel.cs" />
     <Compile Include="Models\AnalyticsTablePageModel.cs" />
     <Compile Include="Models\ChoiceGroupPageModel.cs" />
@@ -387,6 +391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410121532547_PeerAssasment.resx">
       <DependentUpon>201410121532547_PeerAssasment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410191539264_Add_PeerAssasmentReview.resx">
+      <DependentUpon>201410191539264_Add_PeerAssasmentReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
