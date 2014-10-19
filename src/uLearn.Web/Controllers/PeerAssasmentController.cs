@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using uLearn.PeerAssasments;
 using uLearn.Web.DataContexts;
-using uLearn.Web.Models;
 using uLearn.Web.Models.PeerAssasmentModels;
 
 namespace uLearn.Web.Controllers
@@ -21,14 +20,15 @@ namespace uLearn.Web.Controllers
             if (!CheckAccessConditions(userId, step, peerAssasment))
                 throw new Exception("Вернуть страничку \"Вы все ...\"");
 
-
-            var proposition = peerAssasementRepo.GetUserProposition(courseId, peerAssasment.Id, User.Identity.GetUserId());
+            var proposition = peerAssasementRepo.GetUserProposition(courseId, peerAssasment.Id, userId);
+            var userReview = peerAssasementRepo.GetUserReview(courseId, peerAssasment.Id, userId);
             var model = new PeerAssasmentModel
             {
                 CourseId = courseId,
                 PA = peerAssasment,
                 StepType = step,
-                UserProposition = proposition
+                UserProposition = proposition,
+                UserReview = userReview
             };
             return View("FirstPAView", model);
         }
@@ -38,8 +38,17 @@ namespace uLearn.Web.Controllers
         public void SubmitProposition(string courseId, string peerAssasmentId)
         {
             var user = User.Identity;
-            var proposition = GetProposition(Request.InputStream);
+            var proposition = GetStringFromStream(Request.InputStream);
             peerAssasementRepo.AddUserProposition(courseId, peerAssasmentId, user.GetUserId(), proposition, DateTime.UtcNow);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public void SubmitReview(string courseId, string peerAssasmentId, int answerId)
+        {
+            var user = User.Identity;
+            var review = GetStringFromStream(Request.InputStream);
+            peerAssasementRepo.AddUserReview(courseId, peerAssasmentId, user.GetUserId(), answerId, review, DateTime.UtcNow);
         }
 
         private bool CheckAccessConditions(string userId, PeerAssasmentStepType stepType, PeerAssasment peerAssasment)
@@ -55,7 +64,7 @@ namespace uLearn.Web.Controllers
             return step == null ? PeerAssasmentStepType.Undefined : step.StepType;
         }
 
-        private static string GetProposition(Stream inputStream)
+        private static string GetStringFromStream(Stream inputStream)
         {
             var codeBytes = new MemoryStream();
             inputStream.CopyTo(codeBytes);
