@@ -1,4 +1,4 @@
-﻿var $submitButton = $(".submitProposition-peerAssasement-button");
+﻿var $submitButton = $(".submit-peerAssasement-button");
 
 $submitButton.click(function () {
     var proposition = $(".markdown-input")[0].codeMirrorEditor.getValue();

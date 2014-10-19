@@ -20,7 +20,7 @@ else
 {
     <textarea class='markdown-input'>@Model.UserProposition</textarea>
     <div class="control-buttons">
-        <button type="button" class="submitProposition-peerAssasement-button btn btn-primary no-rounds"
+        <button type="button" class="submit-peerAssasement-button btn btn-primary no-rounds"
                 data-url="@Url.Action("SubmitProposition", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id})">
             SUBMIT
         </button>
