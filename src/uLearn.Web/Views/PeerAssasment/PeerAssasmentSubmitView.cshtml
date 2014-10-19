@@ -1,0 +1,10 @@
+﻿@model uLearn.Web.Models.PeerAssasmentModels.PeerAssasmentSubmitModel
+<div>
+    <textarea class='markdown-input pa-submit-data'>@Model.InitialValue</textarea>
+    <div class="control-buttons">
+        <button type="button" class="submit-peerAssasement-button btn btn-primary no-rounds"
+                data-url="@Model.SubmitUrl">
+            SUBMIT
+        </button>
+    </div>
+</div>

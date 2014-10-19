@@ -1,22 +1,20 @@
 ﻿@using uLearn
 @using uLearn.PeerAssasments
-@model uLearn.Web.Models.PeerAssasmentModels.PeerAssasmentModel
-
+@using uLearn.Web.Models.PeerAssasmentModels
+@model PeerAssasmentModel
+@{
+    var submitModel = new PeerAssasmentSubmitModel
+    {
+        InitialValue = Model.UserReview.Review,
+        SubmitUrl = @Url.Action("SubmitReview", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id, answerId = Model.UserReview.OtherUserPropositionId })
+    };
+}
 <p>Чужой тезис</p>
-
 @Html.Raw(Model.UserReview.OtherUserProposition.RenderMd())
-
 <p>Review</p>
-
 @if (Model.StepType <= PeerAssasmentStepType.Review)
 {
-    <textarea class='markdown-input'>@Model.UserReview.Review</textarea>
-    <div class="control-buttons">
-        <button type="button" class="submit-peerAssasement-button btn btn-primary no-rounds"
-                data-url="@Url.Action("SubmitReview", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id, answerId = Model.UserReview.OtherUserPropositionId })">
-            SUBMIT
-        </button>
-    </div>
+    @Html.Partial("PeerAssasmentSubmitView", submitModel)
 }
 else
 {

@@ -241,6 +241,7 @@
     <Compile Include="Models\PeerAssasmentModels\DLA\PeerAssasmentAnswer.cs" />
     <Compile Include="Models\PeerAssasmentModels\DLA\PeerAssasmentReview.cs" />
     <Compile Include="Models\PeerAssasmentModels\PeerAssasmentModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\PeerAssasmentSubmitModel.cs" />
     <Compile Include="Models\PersonalStatisticPageModel.cs" />
     <Compile Include="Models\QuizAnalyticsModel.cs" />
     <Compile Include="Models\QuizInfoModel.cs" />
@@ -845,6 +846,9 @@
     <Content Include="Views\Analytics\SystemStatistics.cshtml" />
     <Content Include="Views\Account\ChangeDetailsPartial.cshtml" />
     <Content Include="Views\PeerAssasment\FirstPAView.cshtml" />
+    <Content Include="Views\PeerAssasment\PropositionWritingView.cshtml" />
+    <Content Include="Views\PeerAssasment\ReviewView.cshtml" />
+    <Content Include="Views\PeerAssasment\PeerAssasmentSubmitView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

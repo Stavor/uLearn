@@ -1,16 +1,14 @@
 ﻿var $submitButton = $(".submit-peerAssasement-button");
 
 $submitButton.click(function () {
-    var proposition = $(".markdown-input")[0].codeMirrorEditor.getValue();
+    var submitData = $submitButton.parent().parent().find(".pa-submit-data")[0].codeMirrorEditor.getValue();
     $submitButton.text("...running...").addClass("active");
     $.ajax(
     {
         type: "POST",
         url: $submitButton.data("url"),
-        data: proposition
+        data: submitData
     }).always(function () {
         $submitButton.text("Submit").removeClass("active");
     });
 });
-
-//JSON.stringify(new Proposition(proposition))

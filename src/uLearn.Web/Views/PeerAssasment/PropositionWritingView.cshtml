@@ -1,7 +1,14 @@
 ﻿@using uLearn
 @using uLearn.PeerAssasments
-@model uLearn.Web.Models.PeerAssasmentModels.PeerAssasmentModel
-
+@using uLearn.Web.Models.PeerAssasmentModels
+@model PeerAssasmentModel
+@{
+    var submitModel = new PeerAssasmentSubmitModel
+    {
+        InitialValue = @Model.UserProposition,
+        SubmitUrl = @Url.Action("SubmitProposition", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id })
+    };
+}
 @if (string.IsNullOrEmpty(Model.UserProposition))
 {
     <p>Напишите ваш тезис</p>
@@ -10,18 +17,10 @@ else
 {
     <p>Ваш тезис</p>
 }
-
 @Html.Raw(Model.PA.Proposition.RenderMd())
-
 @if (Model.StepType <= PeerAssasmentStepType.PropositionWriting)
 {
-    <textarea class='markdown-input'>@Model.UserProposition</textarea>
-    <div class="control-buttons">
-        <button type="button" class="submit-peerAssasement-button btn btn-primary no-rounds"
-                data-url="@Url.Action("SubmitProposition", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id})">
-            SUBMIT
-        </button>
-    </div>
+    @Html.Partial("PeerAssasmentSubmitView", submitModel)
 }
 else
 {
