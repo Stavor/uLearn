@@ -234,8 +234,8 @@
     <Compile Include="Models\ChoiceGroupPageModel.cs" />
     <Compile Include="Models\CoursePageModel.cs" />
     <Compile Include="Models\HintPageModel.cs" />
-    <Compile Include="Models\PeerAssasmentAnswer.cs" />
-    <Compile Include="Models\PeerAssasmentModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\DLA\PeerAssasmentAnswer.cs" />
+    <Compile Include="Models\PeerAssasmentModels\PeerAssasmentModel.cs" />
     <Compile Include="Models\PersonalStatisticPageModel.cs" />
     <Compile Include="Models\QuizAnalyticsModel.cs" />
     <Compile Include="Models\QuizInfoModel.cs" />

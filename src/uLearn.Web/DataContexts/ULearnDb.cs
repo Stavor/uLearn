@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using uLearn.Web.Migrations;
 using uLearn.Web.Models;
+using uLearn.Web.Models.PeerAssasmentModels.DLA;
 
 namespace uLearn.Web.DataContexts
 {

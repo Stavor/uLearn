@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace uLearn.Web.Models
+namespace uLearn.Web.Models.PeerAssasmentModels.DLA
 {
     public class PeerAssasmentAnswer
     {

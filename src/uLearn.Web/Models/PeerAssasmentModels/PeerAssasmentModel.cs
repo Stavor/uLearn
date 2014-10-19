@@ -1,7 +1,6 @@
 ﻿using uLearn.PeerAssasments;
-using uLearn.Web.Controllers;
 
-namespace uLearn.Web.Models
+namespace uLearn.Web.Models.PeerAssasmentModels
 {
     public class PeerAssasmentModel
     {

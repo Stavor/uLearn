@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using uLearn.PeerAssasments;
 using uLearn.Web.DataContexts;
 using uLearn.Web.Models;
+using uLearn.Web.Models.PeerAssasmentModels;
 
 namespace uLearn.Web.Controllers
 {
@@ -19,6 +20,7 @@ namespace uLearn.Web.Controllers
             var userId = User.Identity.GetUserId();
             if (!CheckAccessConditions(userId, step, peerAssasment))
                 throw new Exception("Вернуть страничку \"Вы все ...\"");
+
 
             var proposition = peerAssasementRepo.GetUserProposition(courseId, peerAssasment.Id, User.Identity.GetUserId());
             var model = new PeerAssasmentModel
