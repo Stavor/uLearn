@@ -24,5 +24,6 @@ namespace uLearn.Web.DataContexts
 		public DbSet<UserQuiz> UserQuizzes { get; set; }
 		public DbSet<UnitAppearance> Units { get; set; }
         public DbSet<PeerAssasmentAnswer> PeerAssasmentAnswers { get; set; }
+        public DbSet<PeerAssasmentReview> PeerAssasmentReviews { get; set; }
 	}
 }
