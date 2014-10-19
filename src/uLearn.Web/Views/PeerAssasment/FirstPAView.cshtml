@@ -1,9 +1,9 @@
 ﻿@using uLearn
 @using uLearn.PeerAssasments
-@using uLearn.Web.Controllers
 @model uLearn.Web.Models.PeerAssasmentModels.PeerAssasmentModel
 @{
     var isPropositionWriting = Model.StepType == PeerAssasmentStepType.PropositionWriting;
+    var isReview = Model.StepType == PeerAssasmentStepType.Review;
 }
 
 @if (string.IsNullOrEmpty(Model.UserProposition))
@@ -29,4 +29,28 @@ else
 else
 {
     @Html.Raw(Model.UserProposition.RenderMd())
+}
+
+@if (!isPropositionWriting)
+{
+    <p>Чужой тезис</p>
+
+    @Html.Raw(Model.UserReview.OtherUserProposition.RenderMd())
+    
+    <p>Review</p>
+    
+    if (isReview)
+    {
+        <textarea class='markdown-input'>@Model.UserReview.Review</textarea>
+        <div class="control-buttons">
+            <button type="button" class="submit-peerAssasement-button btn btn-primary no-rounds"
+                    data-url="@Url.Action("SubmitReview", "PeerAssasment", new { courseId = Model.CourseId, peerAssasmentId = Model.PA.Id, answerId = Model.UserReview.OtherUserPropositionId})">
+                SUBMIT
+            </button>
+        </div>
+    }
+    else
+    {
+        @Html.Raw(Model.UserReview.Review.RenderMd())
+    }
 }
