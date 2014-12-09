@@ -215,6 +215,10 @@
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
+    <Compile Include="Models\PeerAssasmentModels\DAL\Answer.cs" />
+    <Compile Include="Models\PeerAssasmentModels\DAL\Mark.cs" />
+    <Compile Include="Models\PeerAssasmentModels\DAL\Proposition.cs" />
+    <Compile Include="Models\PeerAssasmentModels\DAL\Review.cs" />
     <Compile Include="Models\PeerAssasmentModels\MarkModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\PropositionModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\ReviewModel.cs" />
