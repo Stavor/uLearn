@@ -212,6 +212,11 @@
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HintController.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepositoryTest.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\Result.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\SaftyExecutor.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\Storage\IPeerAssasmentStorage.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\Storage\PeerAssasmentStorage.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\ResultHelper.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
