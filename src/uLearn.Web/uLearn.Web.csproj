@@ -225,6 +225,14 @@
     <Compile Include="DataContexts\PeerAssasmentRepository\PeerAssasmentAnswerModelBuilder.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\PeerAssasmentAnswerUpdater.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\PeerAsssasmentAnswerRepository.cs" />
+    <Compile Include="Migrations\201412091801310_PeerAssasmentDatas.cs" />
+    <Compile Include="Migrations\201412091801310_PeerAssasmentDatas.Designer.cs">
+      <DependentUpon>201412091801310_PeerAssasmentDatas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412091949502_PeerAssasmentDatas1.cs" />
+    <Compile Include="Migrations\201412091949502_PeerAssasmentDatas1.Designer.cs">
+      <DependentUpon>201412091949502_PeerAssasmentDatas1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
@@ -448,6 +456,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412040905024_TextBlobLimits.resx">
       <DependentUpon>201412040905024_TextBlobLimits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412091801310_PeerAssasmentDatas.resx">
+      <DependentUpon>201412091801310_PeerAssasmentDatas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412091949502_PeerAssasmentDatas1.resx">
+      <DependentUpon>201412091949502_PeerAssasmentDatas1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
