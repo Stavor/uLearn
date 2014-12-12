@@ -211,6 +211,7 @@
     <Compile Include="Controllers\SlideNavigationController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HintController.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepositoryTest.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
