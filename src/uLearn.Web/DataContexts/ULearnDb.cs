@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using uLearn.Web.Migrations;
 using uLearn.Web.Models;
+using uLearn.Web.Models.PeerAssasmentModels.DAL;
 
 namespace uLearn.Web.DataContexts
 {
@@ -23,5 +24,10 @@ namespace uLearn.Web.DataContexts
 		public DbSet<UserQuiz> UserQuizzes { get; set; }
 		public DbSet<UnitAppearance> Units { get; set; }
 		public DbSet<TextBlob> Texts { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Proposition>  Propositions { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Mark> Marks { get; set; }
 	}
 }
