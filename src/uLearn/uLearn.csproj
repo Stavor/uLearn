@@ -97,6 +97,9 @@
     <Compile Include="FileExtensions.cs" />
     <Compile Include="ISlideLoader.cs" />
     <Compile Include="Markdown2.cs" />
+    <Compile Include="PeerAssasments\PeerAssasment.cs" />
+    <Compile Include="PeerAssasments\PeerAssasmentSlide.cs" />
+    <Compile Include="PeerAssasments\PeerAssasmentSlideLoader.cs" />
     <Compile Include="Quizes\Quiz.cs" />
     <Compile Include="Quizes\QuizSlide.cs" />
     <Compile Include="Quizes\QuizBlock.cs" />
