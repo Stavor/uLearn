@@ -1,4 +1,5 @@
 ﻿@using uLearn
+@using uLearn.PeerAssasments
 @model CoursePageModel
 
 @{
@@ -22,6 +23,11 @@
 				{
 					@Html.Partial("_SolutionControl", Model)
 				}
+                @if (Model.Slide is PeerAssasmentSlide)
+                {
+                    var peerAssasment = (Model.Slide as PeerAssasmentSlide).PeerAssasment;
+                    @Html.Action("Run", "PeerAssasment", new { courseId = Model.CourseId, peerAssasment })
+                }
 				@Html.Partial("_AskBar")
 			</div>
 			@Html.Partial("_RatesBar")

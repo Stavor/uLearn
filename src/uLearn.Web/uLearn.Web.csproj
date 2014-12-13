@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="codemirror\CsCompleterGenerator.cs" />
+    <Compile Include="Controllers\PeerAssasmentController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
@@ -998,6 +999,8 @@
     <Content Include="tablesorter-master\css\psd\green-unsorted.psd" />
     <Content Include="tablesorter-master\css\psd\metro-style.psd" />
     <Content Include="tablesorter-master\css\theme.less" />
+    <Content Include="Views\PeerAssasment\Run.cshtml" />
+    <Content Include="Views\PeerAssasment\PropositionView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
