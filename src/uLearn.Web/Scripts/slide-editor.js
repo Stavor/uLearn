@@ -1,41 +1,57 @@
 ﻿CodeMirror.commands.autocomplete = function (cm) {
-	cm.showHint({ hint: CodeMirror.hint.csharp });
+    cm.showHint({ hint: CodeMirror.hint.csharp });
 }
 
-function codeMirrorClass(c, editable) {
-	var codes = document.getElementsByClassName(c);
-	for (var i = 0; i < codes.length; i++) {
-		var element = codes[i];
-		var showLineNumbers = (element.classList == undefined) ? true : !element.classList.contains("code-no-linenumbers");
-		var editor = CodeMirror.fromTextArea(element,
-		{
-			mode: "text/x-csharp",
-			lineNumbers: showLineNumbers,
-			theme: editable ? "cobalt" : "default",
-			indentWithTabs: true,
-			tabSize: 4,
-			indentUnit: 4,
-			extraKeys: {
-				"Ctrl-Space": "autocomplete",
-				".": function(cm) {
-					setTimeout(function() { cm.execCommand("autocomplete"); }, 100);
-					return CodeMirror.Pass;
-				}
-			},
-			readOnly: !editable,
-			//autoCloseBrackets: true, // bug: autoCloseBracket breakes indentation after for|while|...
-			styleActiveLine: editable,
-			matchBrackets: true,
-	});
-		element.codeMirrorEditor = editor;
-		if (editable)
-			editor.focus();
-
-	}
+function createSharpConfiguration(editable) {
+    var extraKeys = {
+        "Ctrl-Space": "autocomplete",
+        ".": function (cm) {
+            setTimeout(function () { cm.execCommand("autocomplete"); }, 100);
+            return CodeMirror.Pass;
+        }
+    };
+    return createCodeMirrorConfiguration("text/x-csharp", "cobalt", editable, extraKeys);
 }
 
-codeMirrorClass("code-exercise", true);
-codeMirrorClass("code-sample", false);
+function createMarkdownConfiguration() {
+    var extraKeys = {
+        "Ctrl-S": function (cm) {
+            return;
+        }
+    };
+    return createCodeMirrorConfiguration("markdown", "default", true, extraKeys);
+}
+
+function createCodeMirrorConfiguration(mode, editorTheme, editable, extraKeys) {
+    return {
+        mode: mode,
+        lineNumbers: true,
+        theme: editable ? editorTheme : "default",
+        indentWithTabs: true,
+        tabSize: 4,
+        indentUnit: 4,
+        extraKeys: extraKeys,
+        readOnly: !editable,
+        //autoCloseBrackets: true, // bug: autoCloseBracket breakes indentation after for|while|...
+        styleActiveLine: editable,
+        matchBrackets: true,
+    };
+}
+
+function codeMirrorClass(c, config) {
+    var codes = document.getElementsByClassName(c);
+    for (var i = 0; i < codes.length; i++) {
+        var element = codes[i];
+        var editor = CodeMirror.fromTextArea(element, config);
+        element.codeMirrorEditor = editor;
+        if (!config.readOnly)
+            editor.focus();
+    }
+}
+
+codeMirrorClass("code-exercise", createSharpConfiguration(true));
+codeMirrorClass("code-sample", createSharpConfiguration(false));
+codeMirrorClass("markdown-input", createMarkdownConfiguration());
 
 function refreshPreviousDraft(ac, id) {
     window.onbeforeunload = function () {
