@@ -11,6 +11,12 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
         {
             return new AnswerModel
             {
+                AnswerId = new AnswerId
+                {
+                    UserId = answer.UserId,
+                    CourseId = answer.CourseId,
+                    SlideId = answer.SlideId,
+                },
                 Proposition = BuildPropositon(answer.Proposition),
                 Review = BuildReview(answer.Reviews)
             };

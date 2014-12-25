@@ -55,7 +55,8 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                         ? default(Answer).MarkAsFail(new AnswerWithIdDoesntExistException(answerId))
                         : r[0].MarkAsSuccess())
                 .SucceedsWith(ans => SaftyExecutor.TryMake(ans, update, "Во премя обновления ответа произошла ошибка."))
-                .SucceedsWith(ans => storage.TryUpdate(ans));
+                .SucceedsWith(ans => storage.TryUpdate(ans))
+                .SucceedsWith(x => x);
         }
 
         public AnswerModel GetOrCreate(AnswerId answerId, bool needNewReview = false)

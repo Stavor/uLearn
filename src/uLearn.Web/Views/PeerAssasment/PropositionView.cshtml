@@ -1,3 +1,29 @@
-﻿@model uLearn.Web.Models.PeerAssasmentModels.AnswerModel
-<p>Ваш тезис</p>
-@Html.Raw(Model.Proposition.Text)
+﻿@using uLearn.Web.Models.PeerAssasmentModels
+@using uLearn.Web.Views.PeerAssasment
+@model uLearn.Web.Models.PeerAssasmentModels.PropositionModel
+@{
+    var save = new PostActionButtonModel
+    {
+        PostUrl = Url.Action("SaveProposition", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }),
+        OnSuccess = "reloadProposition",
+        UpdateTargetId = "propositionId",
+        Text = "SAVE"
+    };
+}
+<div id=@save.UpdateTargetId>
+    <p>Ваш тезис</p>
+    <div id="readonly-view" >
+        <span id="readonly-proposition">@Html.Raw(Model.Text)</span>
+    </div>
+    <div id="editing-view" >
+        @using (Html.BeginForm())
+        {
+            @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
+            {
+                {"id", "editing-proposition"},
+                {"class", "markdown-input"}
+            })
+            @Html.PostActionButtonFor(save)
+        }
+    </div>
+</div>

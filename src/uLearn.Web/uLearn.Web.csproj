@@ -242,6 +242,7 @@
     <Compile Include="Models\PeerAssasmentModels\DAL\Proposition.cs" />
     <Compile Include="Models\PeerAssasmentModels\DAL\Review.cs" />
     <Compile Include="Models\PeerAssasmentModels\MarkModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\PostActionButtonModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\PropositionModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\ReviewModel.cs" />
     <Compile Include="DataContexts\TextsRepo.cs" />
@@ -348,6 +349,7 @@
       <DependentUpon>201408201208379_AddIsRightQuizBlock.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseManager_should.cs" />
+    <Compile Include="Views\PeerAssasment\HtmlHelper.cs" />
     <Compile Include="WebCourseManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -825,6 +827,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Jsdifflib\jsdifflib.js" />
     <Content Include="Scripts\slide-editor.js" />
+    <Content Include="Scripts\slide-post-action-button.js" />
     <Content Include="Scripts\slide-run.js" />
     <Content Include="Scripts\slide-solutions-like.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -1001,6 +1004,7 @@
     <Content Include="tablesorter-master\css\theme.less" />
     <Content Include="Views\PeerAssasment\Run.cshtml" />
     <Content Include="Views\PeerAssasment\PropositionView.cshtml" />
+    <Content Include="Views\PeerAssasment\PostActionButtonView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

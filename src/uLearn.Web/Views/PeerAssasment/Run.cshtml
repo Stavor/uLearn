@@ -1,5 +1,9 @@
 ﻿@model uLearn.Web.Models.PeerAssasmentModels.AnswerModel
+@{
+    ViewBag.CourseId = Model.AnswerId.CourseId;
+    ViewBag.PeerAssasmentId = Model.AnswerId.SlideId;
+}
 @if (Model.Proposition != null)
 {
-    @Html.Partial("PropositionView")
+    @Html.Partial("PropositionView", Model.Proposition)
 }
