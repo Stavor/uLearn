@@ -53,7 +53,7 @@ function reloadProposition(context, param) {
 //    if (param.IsReadonly == true ) {
 //        context.find("#readonly-view").attr("hidden", false);
 //        context.find("#editing-view").attr("hidden", true);
-        context.find("#readonly-proposition").html(param.Text);
+    context.find("#readonly-proposition").html(param.RenderedText);
 //    }
     if (param.IsReadonly == false) {
         context.find("#readonly-view").attr("hidden", true);

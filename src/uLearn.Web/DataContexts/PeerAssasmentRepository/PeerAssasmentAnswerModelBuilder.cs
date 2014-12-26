@@ -61,7 +61,8 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 ? null
                 : new PropositionModel
                 {
-                    Text = proposition.Text
+                    Text = proposition.Text,
+                    RenderedText = proposition.Text.RenderMd()
                 };
         }
     }
