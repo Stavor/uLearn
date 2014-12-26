@@ -5,6 +5,6 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 {
     public interface IPeerAssasmentAnswerModelBuilder
     {
-        AnswerModel Build(Answer answer);
+        AnswerModel Build(Answer answer, bool assignNotFail);
     }
 }

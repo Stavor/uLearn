@@ -1,25 +1,26 @@
 ﻿var $postActionButton = $(".postAction-peerAssasement-button");
 
 
-$postActionButton.click(function () {
-    var form = $postActionButton.parent();
+$postActionButton.click(function (e) {
+    var postActionButton = $(e.target);
+    var form = postActionButton.parent();
     if (form.is("form")) {
         codeMirrorEditorAutoSave(form);
         var formData = form.serializeObject();
         var submitData = JSON.stringify(formData);
-        var text = $postActionButton.text();
-        $postActionButton.text("...running...").addClass("active");
+        var text = postActionButton.text();
+        postActionButton.text("...running...").addClass("active");
         $.ajax(
             {
                 type: "POST",
-                url: $postActionButton.data("url"),
+                url: postActionButton.data("url"),
                 data: submitData
             })
             .success(function (ans) {
                 var actionName = ans.ClientActionName;
                 var param = ans.ParametrDescription;
                 if (actionName && param) {
-                    var el = $("#" + $postActionButton.data("update-id"));
+                    var el = $("#" + postActionButton.data("update-id"));
                     $updateFuncs[actionName](el, param);
                 } else {
                     //.. а что если нет?
@@ -30,7 +31,7 @@ $postActionButton.click(function () {
                 console.log(req.responseText);
             })
             .always(function() {
-                $postActionButton.text(text).removeClass("active");
+                postActionButton.text(text).removeClass("active");
             });
     }
 });

@@ -7,7 +7,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 {
     public class PeerAssasmentAnswerModelBuilder : IPeerAssasmentAnswerModelBuilder
     {
-        public AnswerModel Build(Answer answer)
+        public AnswerModel Build(Answer answer, bool assignNotFail)
         {
             return new AnswerModel
             {
@@ -18,11 +18,11 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                     SlideId = answer.SlideId,
                 },
                 Proposition = BuildPropositon(answer.Proposition),
-                Review = BuildReview(answer.Reviews)
+                Review = BuildReview(answer.Reviews, assignNotFail)
             };
         }
 
-        private static ReviewModel BuildReview(IEnumerable<Review> reviews)
+        private static ReviewModel BuildReview(IEnumerable<Review> reviews, bool assignNotFail)
         {
             if (reviews == null)
                 return null;
@@ -32,12 +32,13 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             if (reviewsArr.Length == 0)
                 return null;
 
-            var reviewData = reviewsArr[reviewsArr.Length];
+            var reviewData = reviewsArr.LastOrDefault() ?? new Review();
             return new ReviewModel
             {
-                TextForReview = (reviewData.PropositionForReview ?? new Proposition()).Text, //todo странное условие
+                IsNotAssign = assignNotFail,
+                TextForReview = (reviewData.PropositionForReview ?? new Proposition()).Text.RenderMd(), //todo странное условие
                 Text = reviewData.Text,
-                Marks = BuildMarks(reviewData.Marks).FirstOrDefault()
+                Marks = BuildMarks(reviewData.Marks ?? new Mark[0]).FirstOrDefault()
             };
         }
 

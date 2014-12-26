@@ -71,28 +71,27 @@ namespace uLearn.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public JsonResult SubmitReview(string courseId, string peerAssasmentId)
+        public void SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
         {
             var user = User.Identity;
-            var review = GetFromStream<ReviewModel>(Request.InputStream);
+//            var review = GetFromStream<ReviewModel>(Request.InputStream);
             var answerId = new AnswerId
             {
                 UserId = user.GetUserId(),
                 CourseId = courseId,
                 SlideId = peerAssasmentId
             };
-
             answerRepository.UpdateAnswerBy(answerId, review);
 
-            var answer = answerRepository.GetOrCreate(answerId);
-            ViewBag.CourseId = answerId.CourseId;
-            ViewBag.PeerAssasmentId = answerId.SlideId;
+//            var answer = answerRepository.GetOrCreate(answerId);
+//            ViewBag.CourseId = answerId.CourseId;
+//            ViewBag.PeerAssasmentId = answerId.SlideId;
 
-            return Json(new OperationResult //todo запариться за это 
-            {
-                ClientActionName = "reloadReview",
-                ParametrDescription = answer.Review ?? new ReviewModel()
-            });
+//            return Json(new OperationResult //todo запариться за это 
+//            {
+//                ClientActionName = "reloadReview",
+//                ParametrDescription = answer.Review ?? new ReviewModel()
+//            });
         }
 
         private static T GetFromStream<T>(Stream inputStream)

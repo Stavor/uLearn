@@ -21,6 +21,12 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             CheckCorrectAnswerModel(new AnswerModel(), repository.GetOrCreate(answerId));
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            CleanAllDatas();            
+        }
+
         [Test]
         public void PropositionUpdateTest()
         {
@@ -43,11 +49,18 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
         [Test]
         public void ReviewUpdateTest()
         {
+            var anserId2 = new AnswerId
+            {
+                CourseId = answerId.CourseId,
+                UserId = "newUserId",
+                SlideId = answerId.SlideId
+            };
+            repository.GetOrCreate(anserId2);
             var review = new ReviewModel
             {
                 Text = "А тут текст Review"
             };
-
+            repository.GetOrCreate(answerId, true);            
             repository.UpdateAnswerBy(answerId, review);
             var expectedAnswer = new AnswerModel
             {
@@ -116,10 +129,10 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 
         private static void CleanAllDatas()
         {
-            CleanSet<Answer>();
-            CleanSet<Review>();
-            CleanSet<Proposition>();
             CleanSet<Mark>();
+            CleanSet<Review>();
+            CleanSet<Answer>();
+            CleanSet<Proposition>();
         }
 
         private static void CleanSet<T>()

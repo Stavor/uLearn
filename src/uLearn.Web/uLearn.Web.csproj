@@ -212,8 +212,10 @@
     <Compile Include="Controllers\SlideNavigationController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HintController.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAssasmentReviewManager.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\Result.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\SaftyExecutor.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\PeerAssasmentReviewManager.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\Storage\IPeerAssasmentStorage.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\Storage\PeerAssasmentStorage.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\OperationResult\ResultHelper.cs" />
@@ -233,6 +235,10 @@
     <Compile Include="Migrations\201412091949502_PeerAssasmentDatas1.cs" />
     <Compile Include="Migrations\201412091949502_PeerAssasmentDatas1.Designer.cs">
       <DependentUpon>201412091949502_PeerAssasmentDatas1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412261122308_newMigratin.cs" />
+    <Compile Include="Migrations\201412261122308_newMigratin.Designer.cs">
+      <DependentUpon>201412261122308_newMigratin.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\PeerAssasmentModels\ActionButtonModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\OperationResult.cs" />
@@ -467,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412091949502_PeerAssasmentDatas1.resx">
       <DependentUpon>201412091949502_PeerAssasmentDatas1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412261122308_newMigratin.resx">
+      <DependentUpon>201412261122308_newMigratin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

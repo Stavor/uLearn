@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace uLearn.Web.Models.PeerAssasmentModels.DAL
 {
@@ -10,7 +11,9 @@ namespace uLearn.Web.Models.PeerAssasmentModels.DAL
 
         public string Text { get; set; }
 
+        [ForeignKey("PropositionForReviewId")]
         public virtual Proposition PropositionForReview { get; set; }
+
         public virtual ICollection<Mark> Marks { get; set; } 
     }
 }

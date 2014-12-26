@@ -30,6 +30,7 @@ namespace uLearn.Web.Migrations
 				var manager = new UserManager<ApplicationUser>(userStore);
 				var user = new ApplicationUser { UserName = "user" };
 				manager.Create(user, "asdasd");
+                manager.AddToRoleAsync(user.Id, LmsRoles.Tester);
 			}
 			if (!context.Users.Any(u => u.UserName == "admin"))
 			{
