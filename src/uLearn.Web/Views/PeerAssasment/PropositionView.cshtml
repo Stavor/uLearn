@@ -2,11 +2,16 @@
 @using uLearn.Web.Views.PeerAssasment
 @model uLearn.Web.Models.PeerAssasmentModels.PropositionModel
 @{
+    var param = new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId };
     var save = new PostActionButtonModel
     {
-        PostUrl = Url.Action("SaveProposition", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }),
+        PostUrl = Url.Action("SaveProposition", "PeerAssasment", param),
         UpdateTargetId = "propositionId",
         Text = "SAVE"
+    };
+    var submit = new SubmitModel
+    {
+        Text = "SUBMIT" 
     };
 }
 <div id=@save.UpdateTargetId>
@@ -15,7 +20,7 @@
         <span id="readonly-proposition">@Html.Raw(Model.Text)</span>
     </div>
     <div id="editing-view" >
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("SubmitProposition", "PeerAssasment", param))
         {
             @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
             {
@@ -23,6 +28,7 @@
                 {"class", "markdown-input"}
             })
             @Html.PostActionButtonFor(save)
+            @Html.SubmitFor(submit)
         }
     </div>
 </div>

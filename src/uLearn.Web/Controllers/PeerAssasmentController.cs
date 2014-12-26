@@ -55,6 +55,22 @@ namespace uLearn.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        public ActionResult SubmitProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
+        {
+            var user = User.Identity;
+            var answerId = new AnswerId
+            {
+                UserId = user.GetUserId(),
+                CourseId = courseId,
+                SlideId = peerAssasmentId
+            };
+            answerRepository.UpdateAnswerBy(answerId, proposition);
+            answerRepository.GetOrCreate(answerId, true);
+            return RedirectToAction("Slide", "Course", new { courseId, slideIndex = peerAssasmentId });
+        }
+
+        [HttpPost]
+        [Authorize]
         public JsonResult SubmitReview(string courseId, string peerAssasmentId)
         {
             var user = User.Identity;

@@ -10,5 +10,10 @@ namespace uLearn.Web.Views.PeerAssasment
         {
             return html.Partial("PostActionButtonView", submitUrl);
         }
+
+        public static MvcHtmlString SubmitFor<T>(this HtmlHelper<T> html, SubmitModel model)
+        {
+            return html.Partial("SubmitView", model);
+        }
     }
 }
