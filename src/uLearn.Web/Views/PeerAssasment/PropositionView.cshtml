@@ -5,13 +5,12 @@
     var save = new PostActionButtonModel
     {
         PostUrl = Url.Action("SaveProposition", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }),
-        OnSuccess = "reloadProposition",
         UpdateTargetId = "propositionId",
         Text = "SAVE"
     };
 }
 <div id=@save.UpdateTargetId>
-    <p>Ваш тезис</p>
+    <p>Ваш тезис:</p>
     <div id="readonly-view" >
         <span id="readonly-proposition">@Html.Raw(Model.Text)</span>
     </div>

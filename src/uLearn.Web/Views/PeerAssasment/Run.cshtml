@@ -6,4 +6,9 @@
 @if (Model.Proposition != null)
 {
     @Html.Partial("PropositionView", Model.Proposition)
+    
+}
+@if (Model.Review != null)
+{
+    @Html.Partial("ReviewView", Model.Review);
 }

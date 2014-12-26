@@ -66,14 +66,14 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             var reviewWitMark = new ReviewModel
             {
                 Text = "И че? Как то не содержательно!",
-                Marks = new[]
-                {
-                    new MarkModel
-                    {
-                        Criterion = "Оценка",
-                        Mark = "Неуд"
-                    }
-                }
+//                Marks = new[]
+//                {
+//                    new MarkModel
+//                    {
+//                        Criterion = "Оценка",
+//                        Mark = "Неуд"
+//                    }
+//                }
             };
 
             repository.UpdateAnswerBy(answerId, reviewWitMark);
@@ -95,14 +95,14 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             actualAnswer = Extend(actualAnswer);
             Assert.AreEqual(expectedAnswer.Proposition.Text, actualAnswer.Proposition.Text, "Неожиданный текст утверждения.");
             Assert.AreEqual(expectedAnswer.Review.Text, actualAnswer.Review.Text, "Неожиданный текст ревью.");
-            Assert.AreEqual(expectedAnswer.Review.Marks.Length, actualAnswer.Review.Marks.Length, "Не ожиданное кол-во оценок.");
-            for (var i = 0; i < expectedAnswer.Review.Marks.Length; i++)
-            {
-                var expMark = expectedAnswer.Review.Marks[i];
-                var actMark = actualAnswer.Review.Marks[i];
-                Assert.AreEqual(expMark.Mark, actMark.Mark, "Нежиданная оценка.");
-                Assert.AreEqual(expMark.Criterion, actMark.Criterion, "Неожиданный критерий оценки.");
-            }
+//            Assert.AreEqual(expectedAnswer.Review.Marks.Length, actualAnswer.Review.Marks.Length, "Не ожиданное кол-во оценок.");
+//            for (var i = 0; i < expectedAnswer.Review.Marks.Length; i++)
+//            {
+//                var expMark = expectedAnswer.Review.Marks[i];
+//                var actMark = actualAnswer.Review.Marks[i];
+//                Assert.AreEqual(expMark.Mark, actMark.Mark, "Нежиданная оценка.");
+//                Assert.AreEqual(expMark.Criterion, actMark.Criterion, "Неожиданный критерий оценки.");
+//            }
         }
 
         private static AnswerModel Extend(AnswerModel answer)
@@ -110,7 +110,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             answer = answer ?? new AnswerModel();
             answer.Proposition = answer.Proposition ?? new PropositionModel();
             answer.Review = answer.Review ?? new ReviewModel();
-            answer.Review.Marks = answer.Review.Marks ?? new MarkModel[0];
+//            answer.Review.Marks = answer.Review.Marks ?? new MarkModel[0];
             return answer;
         }
 

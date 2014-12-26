@@ -1,0 +1,27 @@
+﻿@using uLearn.Web.Models.PeerAssasmentModels
+@using uLearn.Web.Views.PeerAssasment
+@model uLearn.Web.Models.PeerAssasmentModels.ReviewModel
+@{
+    var submit = new PostActionButtonModel
+    {
+        PostUrl = Url.Action("SubmitReview", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }),
+        UpdateTargetId = "reviewId",
+        Text = "SUBMIT"
+    };
+}
+<div id="@submit.UpdateTargetId">
+    <p>Тезис:</p>
+    <span id="other-proposition">@Html.Raw(Model.TextForReview)</span>
+    <p>Ревью:</p>
+    @using (Html.BeginForm())
+    {
+        @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
+        {
+            { "id", "review-text" },
+            { "class", "markdown-input" }
+        })
+        <p>Оцените @Model.Marks.Criterion:</p>
+        @Html.TextBoxFor(model => model.Marks.Mark, new { id = "marksId" })
+        @Html.PostActionButtonFor(submit)
+    }
+</div>

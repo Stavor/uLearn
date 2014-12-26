@@ -46,7 +46,37 @@ namespace uLearn.Web.Controllers
             ViewBag.CourseId = answerId.CourseId;
             ViewBag.PeerAssasmentId = answerId.SlideId;
 
-            return Json(answer.Proposition ?? new PropositionModel());
+            return Json(new OperationResult //todo запариться за это 
+            {
+                ClientActionName = "reloadProposition",
+                ParametrDescription = answer.Proposition ?? new PropositionModel()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public JsonResult SubmitReview(string courseId, string peerAssasmentId)
+        {
+            var user = User.Identity;
+            var review = GetFromStream<ReviewModel>(Request.InputStream);
+            var answerId = new AnswerId
+            {
+                UserId = user.GetUserId(),
+                CourseId = courseId,
+                SlideId = peerAssasmentId
+            };
+
+            answerRepository.UpdateAnswerBy(answerId, review);
+
+            var answer = answerRepository.GetOrCreate(answerId);
+            ViewBag.CourseId = answerId.CourseId;
+            ViewBag.PeerAssasmentId = answerId.SlideId;
+
+            return Json(new OperationResult //todo запариться за это 
+            {
+                ClientActionName = "reloadReview",
+                ParametrDescription = answer.Review ?? new ReviewModel()
+            });
         }
 
         private static T GetFromStream<T>(Stream inputStream)

@@ -35,8 +35,9 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             var reviewData = reviewsArr[reviewsArr.Length];
             return new ReviewModel
             {
+                TextForReview = (reviewData.PropositionForReview ?? new Proposition()).Text, //todo странное условие
                 Text = reviewData.Text,
-                Marks = BuildMarks(reviewData.Marks)
+                Marks = BuildMarks(reviewData.Marks).FirstOrDefault()
             };
         }
 

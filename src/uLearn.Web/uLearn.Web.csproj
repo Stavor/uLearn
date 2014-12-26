@@ -234,6 +234,7 @@
     <Compile Include="Migrations\201412091949502_PeerAssasmentDatas1.Designer.cs">
       <DependentUpon>201412091949502_PeerAssasmentDatas1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\PeerAssasmentModels\OperationResult.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
     <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
@@ -1005,6 +1006,7 @@
     <Content Include="Views\PeerAssasment\Run.cshtml" />
     <Content Include="Views\PeerAssasment\PropositionView.cshtml" />
     <Content Include="Views\PeerAssasment\PostActionButtonView.cshtml" />
+    <Content Include="Views\PeerAssasment\ReviewView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

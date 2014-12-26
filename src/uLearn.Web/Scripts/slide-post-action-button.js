@@ -16,9 +16,14 @@ $postActionButton.click(function () {
                 data: submitData
             })
             .success(function (ans) {
-                var el = $("#" + $postActionButton.data("update-id"));
-                var funcName = $postActionButton.data("on-success");
-                $updateFuncs[funcName](el, ans);
+                var actionName = ans.ClientActionName;
+                var param = ans.ParametrDescription;
+                if (actionName && param) {
+                    var el = $("#" + $postActionButton.data("update-id"));
+                    $updateFuncs[actionName](el, param);
+                } else {
+                    //.. а что если нет?
+                }
             })
             .fail(function (req) {
                 setSimpleResult($serviceError, req.status + " " + req.statusText);
@@ -44,13 +49,13 @@ var $updateFuncs = {
 };
 
 
-function reloadProposition(context, ans) {
-    if (ans.IsReadonly == true) {
-        context.find("#readonly-view").attr("hidden", false);
-        context.find("#editing-view").attr("hidden", true);
-        context.find("#readonly-proposition").html(ans.Text);
-    }
-    if (ans.isReadonly == false) {
+function reloadProposition(context, param) {
+//    if (param.IsReadonly == true ) {
+//        context.find("#readonly-view").attr("hidden", false);
+//        context.find("#editing-view").attr("hidden", true);
+        context.find("#readonly-proposition").html(param.Text);
+//    }
+    if (param.IsReadonly == false) {
         context.find("#readonly-view").attr("hidden", true);
         context.find("#editing-view").attr("hidden", false);
     }
