@@ -9,10 +9,6 @@
         UpdateTargetId = "propositionId",
         Text = "SAVE"
     };
-    var submit = new SubmitModel
-    {
-        Text = "SUBMIT" 
-    };
 }
 <div id=@save.UpdateTargetId>
     <p>Ваш тезис:</p>
@@ -20,7 +16,7 @@
         <span id="readonly-proposition">@Html.Raw(Model.RenderedText)</span>
     </div>
     <div id="editing-view" >
-        @using (Html.BeginForm("SubmitProposition", "PeerAssasment", param))
+        @using (Html.BeginForm())
         {
             @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
             {
@@ -28,7 +24,6 @@
                 {"class", "markdown-input"}
             })
             @Html.PostActionButtonFor(save)
-            @Html.SubmitFor(submit)
         }
     </div>
 </div>

@@ -6,25 +6,21 @@ $postActionButton.click(function (e) {
     var form = postActionButton.parent();
     if (form.is("form")) {
         codeMirrorEditorAutoSave(form);
-        var formData = form.serializeObject();
-        var submitData = JSON.stringify(formData);
+        var formData = form.serializeArray();
+        formData.push({ name: "X-Requested-With", value: "XMLHttpRequest" });
+        formData.push({ name: "X-HTTP-Method-Override", value: "POST" });
         var text = postActionButton.text();
         postActionButton.text("...running...").addClass("active");
         $.ajax(
             {
                 type: "POST",
                 url: postActionButton.data("url"),
-                data: submitData
+                data: formData
             })
             .success(function (ans) {
-                var actionName = ans.ClientActionName;
-                var param = ans.ParametrDescription;
-                if (actionName && param) {
-                    var el = $("#" + postActionButton.data("update-id"));
-                    $updateFuncs[actionName](el, param);
-                } else {
-                    //.. а что если нет?
-                }
+                var actionName = postActionButton.data("on-success");
+                var el = $("#" + postActionButton.data("update-id"));
+                $updateFuncs[actionName](el, ans);
             })
             .fail(function (req) {
                 setSimpleResult($serviceError, req.status + " " + req.statusText);
@@ -46,7 +42,8 @@ function codeMirrorEditorAutoSave(context) {
 }
 
 var $updateFuncs = {
-    reloadProposition: reloadProposition
+    reloadProposition: reloadProposition,
+    reloadReview: reloadReview
 };
 
 
@@ -62,19 +59,6 @@ function reloadProposition(context, param) {
     }
 }
 
-
-$.fn.serializeObject = function () {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function () {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
+function reloadReview(context, param) {
+    alert(1);
+}

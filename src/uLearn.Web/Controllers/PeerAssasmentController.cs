@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using uLearn.PeerAssasments;
 using uLearn.Web.DataContexts.PeerAssasmentRepository;
@@ -30,10 +28,9 @@ namespace uLearn.Web.Controllers
         
         [HttpPost]
         [Authorize]
-        public JsonResult SaveProposition(string courseId, string peerAssasmentId)
+        public JsonResult SaveProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
         {
             var user = User.Identity;
-            var proposition = GetFromStream<PropositionModel>(Request.InputStream);
             var answerId = new AnswerId
             {
                 UserId = user.GetUserId(),
@@ -71,10 +68,9 @@ namespace uLearn.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public void SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
+        public ActionResult SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
         {
             var user = User.Identity;
-//            var review = GetFromStream<ReviewModel>(Request.InputStream);
             var answerId = new AnswerId
             {
                 UserId = user.GetUserId(),
@@ -84,22 +80,10 @@ namespace uLearn.Web.Controllers
             answerRepository.UpdateAnswerBy(answerId, review);
 
 //            var answer = answerRepository.GetOrCreate(answerId);
-//            ViewBag.CourseId = answerId.CourseId;
-//            ViewBag.PeerAssasmentId = answerId.SlideId;
+            ViewBag.CourseId = answerId.CourseId;
+            ViewBag.PeerAssasmentId = answerId.SlideId;
 
-//            return Json(new OperationResult //todo запариться за это 
-//            {
-//                ClientActionName = "reloadReview",
-//                ParametrDescription = answer.Review ?? new ReviewModel()
-//            });
-        }
-
-        private static T GetFromStream<T>(Stream inputStream)
-        {
-            var codeBytes = new MemoryStream();
-            inputStream.CopyTo(codeBytes);
-            var str = Encoding.UTF8.GetString(codeBytes.ToArray());
-            return System.Web.Helpers.Json.Decode<T>(str);
+            return Json("Test!");
         }
     }
 }

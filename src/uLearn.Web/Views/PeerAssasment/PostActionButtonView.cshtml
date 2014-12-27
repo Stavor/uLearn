@@ -1,5 +1,5 @@
 ﻿@model uLearn.Web.Models.PeerAssasmentModels.PostActionButtonModel
 <button type="button" class="postAction-peerAssasement-button btn btn-primary no-rounds"
-        data-url="@Model.PostUrl" data-update-id="@Model.UpdateTargetId">
+        data-url="@Model.PostUrl" data-update-id="@Model.UpdateTargetId" data-on-success="@Model.OnSuccess">
     @Model.Text
 </button>

@@ -1,20 +1,30 @@
-﻿@using uLearn.Web.Controllers
-@using uLearn.Web.Models.PeerAssasmentModels
+﻿@using uLearn.Web.Models.PeerAssasmentModels
 @using uLearn.Web.Views.PeerAssasment
 @model uLearn.Web.Models.PeerAssasmentModels.ReviewModel
 @{
+    var param = new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId };
+    var updateTargetId = "reviewId";
+    var reloadReview = "reloadReview";
     var submit = new PostActionButtonModel
     {
-        PostUrl = Url.Action("SubmitReview", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }),
-        UpdateTargetId = "reviewId",
+        PostUrl = Url.Action("SubmitReview", "PeerAssasment", param),
+        UpdateTargetId = updateTargetId,
+        OnSuccess = reloadReview,
         Text = "SUBMIT"
     };
+    var save = new PostActionButtonModel
+    {
+        PostUrl = Url.Action("SaveReview", "PeerAssasment", param),
+        UpdateTargetId = updateTargetId,
+        OnSuccess = reloadReview,
+        Text = "SAVE"
+    };
 }
-<div id="@submit.UpdateTargetId">
+<div id="@save.UpdateTargetId">
     <p>Тезис:</p>
     <span id="other-proposition">@Html.Raw(Model.TextForReview)</span>
     <p>Ревью:</p>
-    @using (Ajax.BeginForm("SubmitReview", "PeerAssasment", new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId }, new AjaxOptions{HttpMethod = "POST"}))
+    @using (Html.BeginForm())
     {
         @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
         {
@@ -23,7 +33,7 @@
         })
         <p>Оцените: @Html.DisplayTextFor(model => model.Marks.Criterion)</p>
         @Html.TextBoxFor(model => model.Marks.Mark, new { id = "marksId"})
-        @Html.SubmitFor(new SubmitModel{ Text = "SUBMIT"})
-@*        @Html.PostActionButtonFor(submit)*@
+        @Html.PostActionButtonFor(save)
+        @Html.PostActionButtonFor(submit)
     }
 </div>
