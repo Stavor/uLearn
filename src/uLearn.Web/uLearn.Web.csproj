@@ -206,6 +206,7 @@
     <Compile Include="codemirror\CsCompleterGenerator.cs" />
     <Compile Include="Controllers\PeerAssasmentController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\TestInitializer.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
     <Compile Include="Controllers\QuizController.cs" />

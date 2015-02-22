@@ -14,6 +14,11 @@ namespace uLearn.Web.Controllers
             var userId = User.Identity.GetUserId();
             var slideId = peerAssasment.Id;
 
+            return InternalRun(userId, courseId, slideId);
+        }
+
+        public ActionResult InternalRun(string userId, string courseId, string slideId)
+        {
             var answer = answerRepository.GetOrCreate(new AnswerId
             {
                 UserId = userId,
@@ -21,7 +26,7 @@ namespace uLearn.Web.Controllers
                 SlideId = slideId
             });
 
-            return View(answer);
+            return View("Run", answer); 
         }
 
         private readonly PeerAsssasmentAnswerRepository answerRepository = new PeerAsssasmentAnswerRepository();
@@ -84,6 +89,17 @@ namespace uLearn.Web.Controllers
             ViewBag.PeerAssasmentId = answerId.SlideId;
 
             return Json("Test!");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult SetState(PeerAssasmentStepType step, string courseId, string slideId)
+        {
+            var userId = User.Identity.GetUserId();
+            var initializer = new TestInitializer(answerRepository, courseId, slideId, userId);
+            initializer.InitializeFor(step);
+
+            return RedirectToAction("Slide", "Course", new { courseId, slideIndex = slideId });
         }
     }
 }

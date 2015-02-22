@@ -1,8 +1,19 @@
-﻿@model uLearn.Web.Models.PeerAssasmentModels.AnswerModel
+﻿@using uLearn.PeerAssasments
+@using uLearn.Web.Models.PeerAssasmentModels.DAL
+@model uLearn.Web.Models.PeerAssasmentModels.AnswerModel
 @{
     ViewBag.CourseId = Model.AnswerId.CourseId;
     ViewBag.PeerAssasmentId = Model.AnswerId.SlideId;
 }
+
+<table>
+    <tr>
+        <td>@Html.ActionLink("Proposition Writing", "SetState", new { step = PeerAssasmentStepType.PropositionWriting, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
+        <td>@Html.ActionLink("Review", "SetState", new { step = PeerAssasmentStepType.Review, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
+        <td>@Html.ActionLink("Observe", "SetState", new { step = PeerAssasmentStepType.Observe, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
+    </tr>
+</table>
+
 @if (Model.Proposition != null)
 {
     @Html.Partial("PropositionView", Model.Proposition)

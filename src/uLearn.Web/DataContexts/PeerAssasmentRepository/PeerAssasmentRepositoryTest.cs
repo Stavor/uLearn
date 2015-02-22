@@ -24,7 +24,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
         [TearDown]
         public void TearDown()
         {
-            CleanAllDatas();            
+            CleanAllDatas();
         }
 
         [Test]
