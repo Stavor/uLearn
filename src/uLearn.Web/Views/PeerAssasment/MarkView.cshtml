@@ -1,0 +1,19 @@
+﻿@model uLearn.Web.Models.PeerAssasmentModels.MarkModel
+@{
+    var len = Model.MaxMark - Model.MinMark + 1;
+    var items = new SelectListItem[len];
+    for (var i = 0; i < len; i++)
+    {
+        var current = (Model.MinMark + i).ToString();
+        items[i] = new SelectListItem
+        {
+            Text = current,
+            Selected = current == Model.Mark,
+            Value = current
+        };
+    }
+}
+<div>
+    @Html.Raw(Model.Criterion)
+    @Html.DropDownListFor(x => x.Mark,  items)
+</div>
