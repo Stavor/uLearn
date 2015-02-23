@@ -55,7 +55,14 @@ namespace uLearn.Web.Controllers
         {
             var answerId = GetAnswerId(id);
             repository.GetOrCreate(answerId, true);
-            repository.UpdateAnswerBy(answerId, new ReviewModel { Text = review, Marks = {Criterion = "Важная оценка"}});
+            repository.UpdateAnswerBy(answerId, new ReviewModel
+            {
+                Text = review, Marks = new[]
+                {
+                    new MarkModel { Criterion = "Важная оценка" },
+                    new MarkModel { Criterion = "Инетерстность" },
+                }
+            });
         }
 
         private void InitializeForReview()
@@ -96,7 +103,7 @@ namespace uLearn.Web.Controllers
         
         private static void CleanAllDatas()
         {
-            CleanSet<Mark>();
+            CleanSet<Models.PeerAssasmentModels.DAL.Mark>();
             CleanSet<Review>();
             CleanSet<Answer>();
             CleanSet<Proposition>();

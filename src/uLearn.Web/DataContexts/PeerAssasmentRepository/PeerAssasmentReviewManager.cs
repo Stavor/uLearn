@@ -49,6 +49,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                     Marks = new HashSet<Mark>()
                     {
                         new Mark{Criterion = "Важная оценка"}, 
+                        new Mark{Criterion = "Интерестность"}, 
                     }
                 });
                 assigned = true;

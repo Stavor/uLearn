@@ -38,7 +38,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 IsNotAssign = assignNotFail,
                 TextForReview = (reviewData.PropositionForReview ?? new Proposition()).Text.RenderMd(), //todo странное условие
                 Text = reviewData.Text,
-                Marks = BuildMarks(reviewData.Marks ?? new Mark[0]).FirstOrDefault()
+                Marks = BuildMarks(reviewData.Marks ?? new Mark[0])
             };
         }
 

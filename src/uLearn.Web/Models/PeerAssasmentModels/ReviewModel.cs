@@ -5,6 +5,6 @@
         public bool IsNotAssign { get; set; }
         public string TextForReview { get; set; }
         public string Text { get; set; }
-        public MarkModel Marks { get; set; }
+        public MarkModel[] Marks { get; set; }
     }
 }

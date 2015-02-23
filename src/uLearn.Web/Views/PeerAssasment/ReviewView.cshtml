@@ -19,18 +19,6 @@
         OnSuccess = reloadReview,
         Text = "SAVE"
     };
-    var len = Model.Marks.MaxMark - Model.Marks.MinMark + 1;
-    var items = new SelectListItem[len];
-    for (var i = 0; i < len; i++)
-    {
-        var current = (Model.Marks.MinMark + i).ToString();
-        items[i] = new SelectListItem
-        {
-            Text = current,
-            Selected = current == Model.Marks.Mark,
-            Value = current
-        };
-    }
 }
 
 <div id="@save.UpdateTargetId">
@@ -45,10 +33,30 @@
             { "class", "markdown-input" }
         })
         <p>Оцените:</p>
-        @Html.Raw(Model.Marks.Criterion)
-        @Html.Raw(Model.Marks.Mark)
-        @Html.TextBoxFor(x => x.Marks.Criterion, new { hidden = true })
-        @Html.DropDownListFor(x => x.Marks.Mark, items)
+
+        for (var i = 0; i < Model.Marks.Length; i++)
+        {
+            <div>
+                @{
+                    var len = Model.Marks[i].MaxMark - Model.Marks[i].MinMark + 1;
+                    var items = new SelectListItem[len];
+                    for (var l = 0; l < len; l++)
+                    {
+                        var current = (Model.Marks[i].MinMark + l).ToString();
+                        items[l] = new SelectListItem
+                        {
+                            Text = current,
+                            Selected = current == Model.Marks[i].Mark,
+                            Value = current
+                        };
+                    }
+                }
+                @Html.Raw(Model.Marks[i].Criterion)
+                @Html.TextBoxFor(x => x.Marks[i].Criterion, new { hidden = true })
+                @Html.DropDownListFor(x => x.Marks[i].Mark, items)
+            </div>
+        }
+
         @Html.PostActionButtonFor(save)
         @Html.PostActionButtonFor(submit)
     }
