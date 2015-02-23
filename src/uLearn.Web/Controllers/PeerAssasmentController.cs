@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using uLearn.PeerAssasments;
@@ -12,6 +14,7 @@ namespace uLearn.Web.Controllers
         [Authorize]
         public ActionResult Run(string courseId, PeerAssasment peerAssasment)
         {
+            var state = GetState(peerAssasment);
             var userId = User.Identity.GetUserId();
             var slideId = peerAssasment.Id;
 
@@ -104,9 +107,32 @@ namespace uLearn.Web.Controllers
             var answerRepository = createAnswerRepository(courseId, slideId);
             var userId = User.Identity.GetUserId();
             var initializer = new TestInitializer(answerRepository, courseId, slideId, userId);
+
             initializer.InitializeFor(step);
+            if (step != PeerAssasmentStepType.Undefined)
+                Response.Cookies.Add(new HttpCookie("peerAssasmentState", step.ToString()));
+            else
+            {
+                var coockie = new HttpCookie("peerAssasmentState", null)
+                {
+                    Expires = DateTime.UtcNow.AddDays(-1d)
+                };
+                Response.Cookies.Add(coockie);
+            }
 
             return RedirectToAction("Slide", "Course", new { courseId, slideIndex = slideId });
+        }
+
+        private PeerAssasmentStepType GetState(PeerAssasment peerAssasment)
+        {
+            var paCoockie = Request.Cookies.Get("peerAssasmentState");
+            PeerAssasmentStepType step;
+            if (paCoockie != null && paCoockie.Value != null && Enum.TryParse(paCoockie.Value, out step))
+                return step;
+            var now = DateTime.UtcNow;
+            if (peerAssasment != null && peerAssasment.Steps != null)
+                return (peerAssasment.Steps.FirstOrDefault(x => x.Deadline.HasValue && x.Deadline.Value > now) ?? new PeerAssasmentStep()).StepType;
+            return PeerAssasmentStepType.Undefined;
         }
 
         private static PeerAssasment GetPeerAssasment(string courseId, string slideId)

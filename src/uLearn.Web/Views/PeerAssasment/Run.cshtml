@@ -11,6 +11,7 @@
         <td>@Html.ActionLink("Proposition Writing", "SetState", new { step = PeerAssasmentStepType.PropositionWriting, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
         <td>@Html.ActionLink("Review", "SetState", new { step = PeerAssasmentStepType.Review, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
         <td>@Html.ActionLink("Observe", "SetState", new { step = PeerAssasmentStepType.Observe, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
+        <td>@Html.ActionLink("Reset", "SetState", new { step = PeerAssasmentStepType.Undefined, courseId = ViewBag.CourseId, slideId = ViewBag.PeerAssasmentId })</td>
     </tr>
 </table>
 
