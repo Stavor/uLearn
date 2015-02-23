@@ -55,7 +55,7 @@ namespace uLearn.Web.Controllers
         {
             var answerId = GetAnswerId(id);
             repository.GetOrCreate(answerId, true);
-            repository.UpdateAnswerBy(answerId, new ReviewModel { Text = review });
+            repository.UpdateAnswerBy(answerId, new ReviewModel { Text = review, Marks = {Criterion = "Важная оценка"}});
         }
 
         private void InitializeForReview()
