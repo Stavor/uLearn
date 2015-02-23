@@ -17,6 +17,33 @@ namespace uLearn.PeerAssasments
 
         [XmlElement("step")]
         public PeerAssasmentStep[] Steps;
+
+        [XmlElement("marks")]
+        public Marks Marks;
+    }
+
+    public class Marks
+    {
+        [XmlElement("mark")]
+        public Mark Mark;
+    }
+
+    public class Mark
+    {
+        [XmlAttribute("criterion")]
+        public string Criterion { get; set; }
+
+        [XmlAttribute("minVal")]
+        public string MinValue { get; set; }
+
+        [XmlAttribute("maxVal")]
+        public string MaxValue { get; set; }
+
+        [XmlAttribute("weightInViewFreq")]
+        public string WeightInViewFreq { get; set; }
+
+        [XmlAttribute("weightInSummary")]
+        public string WeightInSummary { get; set; }
     }
 
     public class PeerAssasmentStep
