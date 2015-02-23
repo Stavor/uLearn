@@ -19,7 +19,20 @@
         OnSuccess = reloadReview,
         Text = "SAVE"
     };
+    var len = Model.Marks.MaxMark - Model.Marks.MinMark + 1;
+    var items = new SelectListItem[len];
+    for (var i = 0; i < len; i++)
+    {
+        var current = (Model.Marks.MinMark + i).ToString();
+        items[i] = new SelectListItem
+        {
+            Text = current,
+            Selected = current == Model.Marks.Mark,
+            Value = current
+        };
+    }
 }
+
 <div id="@save.UpdateTargetId">
     <p>Тезис:</p>
     <span id="other-proposition">@Html.Raw(Model.TextForReview)</span>
@@ -32,7 +45,10 @@
             { "class", "markdown-input" }
         })
         <p>Оцените:</p>
-        @Html.DisplayFor(model => model.Marks)
+        @Html.Raw(Model.Marks.Criterion)
+        @Html.Raw(Model.Marks.Mark)
+        @Html.TextBoxFor(x => x.Marks.Criterion, new { hidden = true })
+        @Html.DropDownListFor(x => x.Marks.Mark, items)
         @Html.PostActionButtonFor(save)
         @Html.PostActionButtonFor(submit)
     }
