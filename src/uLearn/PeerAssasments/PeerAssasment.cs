@@ -25,7 +25,7 @@ namespace uLearn.PeerAssasments
     public class Marks
     {
         [XmlElement("mark")]
-        public Mark Mark;
+        public Mark[] Mark;
     }
 
     public class Mark
@@ -34,16 +34,16 @@ namespace uLearn.PeerAssasments
         public string Criterion { get; set; }
 
         [XmlAttribute("minVal")]
-        public string MinValue { get; set; }
+        public int MinValue { get; set; }
 
         [XmlAttribute("maxVal")]
-        public string MaxValue { get; set; }
+        public int MaxValue { get; set; }
 
         [XmlAttribute("weightInViewFreq")]
-        public string WeightInViewFreq { get; set; }
+        public double WeightInViewFreq { get; set; }
 
         [XmlAttribute("weightInSummary")]
-        public string WeightInSummary { get; set; }
+        public double WeightInSummary { get; set; }
     }
 
     public class PeerAssasmentStep
