@@ -52,7 +52,9 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 .Select(m => new MarkModel
                 {
                     Mark = m.Value,
-                    Criterion = m.Criterion
+                    Criterion = m.Criterion,
+                    MinMark = -5,
+                    MaxMark = 5
                 }).ToArray();
         }
 

@@ -241,6 +241,14 @@
     <Compile Include="Migrations\201412261122308_newMigratin.Designer.cs">
       <DependentUpon>201412261122308_newMigratin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502221955414_pampam.cs" />
+    <Compile Include="Migrations\201502221955414_pampam.Designer.cs">
+      <DependentUpon>201502221955414_pampam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502222032135_pampam1.cs" />
+    <Compile Include="Migrations\201502222032135_pampam1.Designer.cs">
+      <DependentUpon>201502222032135_pampam1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\PeerAssasmentModels\ActionButtonModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\OperationResult.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
@@ -477,6 +485,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412261122308_newMigratin.resx">
       <DependentUpon>201412261122308_newMigratin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502221955414_pampam.resx">
+      <DependentUpon>201502221955414_pampam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502222032135_pampam1.resx">
+      <DependentUpon>201502222032135_pampam1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

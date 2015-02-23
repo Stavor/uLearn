@@ -5,6 +5,11 @@ namespace uLearn.Web.Models.PeerAssasmentModels.DAL
 {
     public class Review
     {
+        public Review()
+        {
+            Marks = new HashSet<Mark>();
+        }
+
         public int ReviewId { get; set; }
 
         public int PropositionForReviewId { get; set; }
@@ -14,6 +19,6 @@ namespace uLearn.Web.Models.PeerAssasmentModels.DAL
         [ForeignKey("PropositionForReviewId")]
         public virtual Proposition PropositionForReview { get; set; }
 
-        public virtual ICollection<Mark> Marks { get; set; } 
+        public virtual ICollection<Mark> Marks { get; set; }
     }
 }
