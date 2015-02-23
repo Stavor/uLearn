@@ -46,11 +46,6 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 answer.Reviews.Add(new Review
                 {
                     PropositionForReviewId = answerForReview.PropositionId,
-                    Marks = new HashSet<Mark>()
-                    {
-                        new Mark{Criterion = "Важная оценка"}, 
-                        new Mark{Criterion = "Интерестность"}, 
-                    }
                 });
                 assigned = true;
             }

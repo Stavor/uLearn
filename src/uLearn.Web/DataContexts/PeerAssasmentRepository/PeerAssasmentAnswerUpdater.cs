@@ -35,11 +35,17 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             ans.Reviews.Last().Text = review.Text;
             foreach (var newMark in (review.Marks ?? new MarkModel[0]))
             {
+                var isNew = true;
                 foreach (var oldMark in ans.Reviews.Last().Marks)
                 {
                     if (oldMark.Criterion == newMark.Criterion)
+                    {
                         oldMark.Value = newMark.Mark;
+                        isNew = false;
+                    }
                 }
+                if(isNew)
+                    ans.Reviews.Last().Marks.Add(new Mark { Criterion = newMark.Criterion, Value = newMark.Mark });
             }
             return ans;
         }

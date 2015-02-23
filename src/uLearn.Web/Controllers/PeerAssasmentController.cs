@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using uLearn.PeerAssasments;
 using uLearn.Web.DataContexts.PeerAssasmentRepository;
@@ -19,6 +20,7 @@ namespace uLearn.Web.Controllers
 
         public ActionResult InternalRun(string userId, string courseId, string slideId)
         {
+            var answerRepository = createAnswerRepository(courseId, slideId);
             var answer = answerRepository.GetOrCreate(new AnswerId
             {
                 UserId = userId,
@@ -29,12 +31,14 @@ namespace uLearn.Web.Controllers
             return View("Run", answer); 
         }
 
-        private readonly PeerAsssasmentAnswerRepository answerRepository = new PeerAsssasmentAnswerRepository();
+        private readonly Func<string, string, PeerAsssasmentAnswerRepository> createAnswerRepository = 
+            (courseId, slideId) => new PeerAsssasmentAnswerRepository(GetPeerAssasment(courseId, slideId));
         
         [HttpPost]
         [Authorize]
         public JsonResult SaveProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
         {
+            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
             var user = User.Identity;
             var answerId = new AnswerId
             {
@@ -59,6 +63,7 @@ namespace uLearn.Web.Controllers
         [Authorize]
         public ActionResult SubmitProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
         {
+            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
             var user = User.Identity;
             var answerId = new AnswerId
             {
@@ -75,6 +80,7 @@ namespace uLearn.Web.Controllers
         [Authorize]
         public ActionResult SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
         {
+            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
             var user = User.Identity;
             var answerId = new AnswerId
             {
@@ -95,11 +101,19 @@ namespace uLearn.Web.Controllers
         [Authorize]
         public ActionResult SetState(PeerAssasmentStepType step, string courseId, string slideId)
         {
+            var answerRepository = createAnswerRepository(courseId, slideId);
             var userId = User.Identity.GetUserId();
             var initializer = new TestInitializer(answerRepository, courseId, slideId, userId);
             initializer.InitializeFor(step);
 
             return RedirectToAction("Slide", "Course", new { courseId, slideIndex = slideId });
+        }
+
+        private static PeerAssasment GetPeerAssasment(string courseId, string slideId)
+        {
+            var courseManager = WebCourseManager.Instance;
+            var slide = courseManager.GetCourse(courseId).GetSlideById(slideId);
+            return (slide as PeerAssasmentSlide).PeerAssasment;
         }
     }
 }

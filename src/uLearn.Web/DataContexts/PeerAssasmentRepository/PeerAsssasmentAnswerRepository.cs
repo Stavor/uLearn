@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using uLearn.PeerAssasments;
 using uLearn.Web.DataContexts.PeerAssasmentRepository.Exceptions;
 using uLearn.Web.DataContexts.PeerAssasmentRepository.OperationResult;
 using uLearn.Web.DataContexts.PeerAssasmentRepository.Storage;
@@ -15,10 +16,10 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
         private readonly IPeerAssasmentAnswerUpdater answerUpdater;
         private readonly IPeerAssasmentReviewManager reviewManager;
 
-        public PeerAsssasmentAnswerRepository()
+        public PeerAsssasmentAnswerRepository(PeerAssasment peerAssasment)
             : this(
                 new PeerAssasmentStorage(),
-                new PeerAssasmentAnswerModelBuilder(),
+                new PeerAssasmentAnswerModelBuilder(peerAssasment),
                 new PeerAssasmentAnswerUpdater(),
                 new PeerAssasmentReviewManager())
         {

@@ -1,12 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using uLearn.PeerAssasments;
 using uLearn.Web.Models.PeerAssasmentModels;
 using uLearn.Web.Models.PeerAssasmentModels.DAL;
+using Mark = uLearn.Web.Models.PeerAssasmentModels.DAL.Mark;
 
 namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 {
     public class PeerAssasmentAnswerModelBuilder : IPeerAssasmentAnswerModelBuilder
     {
+        private readonly PeerAssasment peerAssasment;
+
+        public PeerAssasmentAnswerModelBuilder(PeerAssasment peerAssasment)
+        {
+            this.peerAssasment = peerAssasment;
+        }
+
         public AnswerModel Build(Answer answer, bool assignNotFail)
         {
             return new AnswerModel
@@ -22,7 +32,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             };
         }
 
-        private static ReviewModel BuildReview(IEnumerable<Review> reviews, bool assignNotFail)
+        private ReviewModel BuildReview(IEnumerable<Review> reviews, bool assignNotFail)
         {
             if (reviews == null)
                 return null;
@@ -42,19 +52,22 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             };
         }
 
-        private static MarkModel[] BuildMarks(IEnumerable<Mark> marks)
+        private MarkModel[] BuildMarks(IEnumerable<Mark> marks)
         {
             if (marks == null)
                 return null;
 
-            return marks
-                .Where(m => m != null)
-                .Select(m => new MarkModel
+            Func<IEnumerable<Mark>, string, string> getMarkOrDefault = (m, crit) =>
+                (m.FirstOrDefault(x => x.Criterion == crit) ?? new Mark()).Value;
+
+            return (
+                from markDef in (peerAssasment.Marks.Mark ?? new PeerAssasments.Mark[0])
+                select new MarkModel
                 {
-                    Mark = m.Value,
-                    Criterion = m.Criterion,
-                    MinMark = -5,
-                    MaxMark = 5
+                    Criterion = markDef.Criterion,
+                    MaxMark = markDef.MaxValue,
+                    MinMark = markDef.MinValue,
+                    Mark = getMarkOrDefault(marks, markDef.Criterion)
                 }).ToArray();
         }
 

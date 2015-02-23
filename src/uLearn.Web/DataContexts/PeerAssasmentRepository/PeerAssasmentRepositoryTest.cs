@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
+using uLearn.PeerAssasments;
 using uLearn.Web.Models.PeerAssasmentModels;
 using uLearn.Web.Models.PeerAssasmentModels.DAL;
+using Mark = uLearn.Web.Models.PeerAssasmentModels.DAL.Mark;
 
 namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 {
@@ -16,7 +18,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 
             AppDomain.CurrentDomain.SetData("DataDirectory", appDataDirectory);
 
-            repository = new PeerAsssasmentAnswerRepository();
+            repository = new PeerAsssasmentAnswerRepository(new PeerAssasment());
             CleanAllDatas();
             CheckCorrectAnswerModel(new AnswerModel(), repository.GetOrCreate(answerId));
         }
