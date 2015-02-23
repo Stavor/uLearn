@@ -18,20 +18,22 @@ namespace uLearn.Web.Controllers
             var userId = User.Identity.GetUserId();
             var slideId = peerAssasment.Id;
 
-            return InternalRun(userId, courseId, slideId);
+            return InternalRun(userId, courseId, slideId, state);
         }
 
-        public ActionResult InternalRun(string userId, string courseId, string slideId)
+        public ActionResult InternalRun(string userId, string courseId, string slideId, PeerAssasmentStepType state)
         {
             var answerRepository = createAnswerRepository(courseId, slideId);
-            var answer = answerRepository.GetOrCreate(new AnswerId
+            var answerId = new AnswerId
             {
                 UserId = userId,
                 CourseId = courseId,
                 SlideId = slideId
-            });
-
-            return View("Run", answer); 
+            };
+            var answer = answerRepository.GetOrCreate(answerId);
+            if (state == PeerAssasmentStepType.Review && answer.Review == null)
+                answer = answerRepository.GetOrCreate(answerId, true);
+            return View("Run", answer);
         }
 
         private readonly Func<string, string, PeerAsssasmentAnswerRepository> createAnswerRepository = 
@@ -129,7 +131,7 @@ namespace uLearn.Web.Controllers
             PeerAssasmentStepType step;
             if (paCoockie != null && paCoockie.Value != null && Enum.TryParse(paCoockie.Value, out step))
                 return step;
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             if (peerAssasment != null && peerAssasment.Steps != null)
                 return (peerAssasment.Steps.FirstOrDefault(x => x.Deadline.HasValue && x.Deadline.Value > now) ?? new PeerAssasmentStep()).StepType;
             return PeerAssasmentStepType.Undefined;
