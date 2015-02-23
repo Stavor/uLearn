@@ -46,6 +46,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 answer.Reviews.Add(new Review
                 {
                     PropositionForReviewId = answerForReview.PropositionId,
+                    PropositionForReview = answerForReview.Proposition
                 });
                 assigned = true;
             }
