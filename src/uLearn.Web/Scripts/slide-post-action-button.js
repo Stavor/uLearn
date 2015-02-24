@@ -43,22 +43,33 @@ function codeMirrorEditorAutoSave(context) {
 
 var $updateFuncs = {
     reloadProposition: reloadProposition,
-    reloadReview: reloadReview
+    reloadReviewBeforeSave: reloadReviewBeforeSave,
+    reloadReviewBeforeSubmit: reloadReviewBeforeSubmit
 };
 
-
 function reloadProposition(context, param) {
-//    if (param.IsReadonly == true ) {
-//        context.find("#readonly-view").attr("hidden", false);
-//        context.find("#editing-view").attr("hidden", true);
     context.find("#readonly-proposition").html(param.RenderedText);
-//    }
-    if (param.IsReadonly == false) {
-        context.find("#readonly-view").attr("hidden", true);
-        context.find("#editing-view").attr("hidden", false);
-    }
 }
 
-function reloadReview(context, param) {
-    alert(1);
+function reloadReviewBeforeSave(context, param) {
+    context.find("#other-proposition").html(param.TextForReview);
+    var textarea = context.find("#review-text")[0];
+    var editor = textarea.codeMirrorEditor;
+    editor.getDoc().setValue(param.Text == null ? "" : param.Text);
+    context.find("#reviewCnt").html(param.ReviewCnt);
+}
+
+function reloadReviewBeforeSubmit(context, param) {
+    context.find("#other-proposition").html(param.TextForReview);
+    var textarea = context.find("#review-text")[0];
+    var editor = textarea.codeMirrorEditor;
+    editor.getDoc().setValue(param.Text == null ? "" : param.Text);
+    var marks = $(".mark .value", context);
+    $.each(marks, function() {
+        var cur = $(this);
+        cur.val($($("option", cur).get(0)).attr("value"));
+    });
+    context.find("#reviewCnt").html(param.ReviewCnt);
+    if (param.ReviewCnt == 0)
+        context.attr("hidden", true);
 }

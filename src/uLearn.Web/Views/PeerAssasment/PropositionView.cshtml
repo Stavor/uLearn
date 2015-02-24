@@ -7,6 +7,7 @@
     {
         PostUrl = Url.Action("SaveProposition", "PeerAssasment", param),
         UpdateTargetId = "propositionId",
+        OnSuccess = "reloadProposition",
         Text = "SAVE"
     };
 }

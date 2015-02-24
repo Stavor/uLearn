@@ -54,7 +54,7 @@ namespace uLearn.Web.Controllers
         private void SaveReview(string id, string review)
         {
             var answerId = GetAnswerId(id);
-            repository.GetOrCreate(answerId, true);
+            repository.GetOrCreate(answerId);
             repository.UpdateAnswerBy(answerId, new ReviewModel
             {
                 Text = review, Marks = new[]
@@ -68,7 +68,7 @@ namespace uLearn.Web.Controllers
         private void InitializeForReview()
         {
             SavePropositions();
-            repository.GetOrCreate(GetAnswerId(userId), true);
+            repository.GetOrCreate(GetAnswerId(userId));
         }
 
         private void SavePropositions()

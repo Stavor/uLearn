@@ -21,9 +21,9 @@ namespace uLearn.Web.Controllers
             return InternalRun(userId, courseId, slideId, state);
         }
 
-        public ActionResult InternalRun(string userId, string courseId, string slideId, PeerAssasmentStepType state)
+        public ActionResult InternalRun(string userId, string courseId, string slideId, PeerAssasmentStepType step)
         {
-            var answerRepository = createAnswerRepository(courseId, slideId);
+            var answerRepository = createAnswerRepository(courseId, slideId, step);
             var answerId = new AnswerId
             {
                 UserId = userId,
@@ -31,19 +31,23 @@ namespace uLearn.Web.Controllers
                 SlideId = slideId
             };
             var answer = answerRepository.GetOrCreate(answerId);
-            if (state == PeerAssasmentStepType.Review && answer.Review == null)
-                answer = answerRepository.GetOrCreate(answerId, true);
             return View("Run", answer);
         }
 
-        private readonly Func<string, string, PeerAsssasmentAnswerRepository> createAnswerRepository = 
-            (courseId, slideId) => new PeerAsssasmentAnswerRepository(GetPeerAssasment(courseId, slideId));
-        
+        private readonly Func<string, string, PeerAssasmentStepType, PeerAsssasmentAnswerRepository> createAnswerRepository =
+            (courseId, slideId, step) => new PeerAsssasmentAnswerRepository(GetPeerAssasment(courseId, slideId), step);
+
+        private readonly Func<PeerAssasment, PeerAssasmentStepType, PeerAsssasmentAnswerRepository> createAnswerRepository2 =
+            (peerAssasment, step) => new PeerAsssasmentAnswerRepository(peerAssasment, step);
+
         [HttpPost]
         [Authorize]
         public JsonResult SaveProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
         {
-            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
+            var peerAssasment = GetPeerAssasment(courseId, peerAssasmentId); //todo нафигачить Init()
+            var state = GetState(peerAssasment);
+            var answerRepository = createAnswerRepository2(peerAssasment, state);
+
             var user = User.Identity;
             var answerId = new AnswerId
             {
@@ -54,38 +58,18 @@ namespace uLearn.Web.Controllers
             answerRepository.UpdateAnswerBy(answerId, proposition);
 
             var answer = answerRepository.GetOrCreate(answerId);
-            ViewBag.CourseId = answerId.CourseId;
-            ViewBag.PeerAssasmentId = answerId.SlideId;
 
-            return Json(new OperationResult //todo запариться за это 
-            {
-                ClientActionName = "reloadProposition",
-                ParametrDescription = answer.Proposition ?? new PropositionModel()
-            });
+            return Json(answer.Proposition);
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult SubmitProposition(string courseId, string peerAssasmentId, PropositionModel proposition)
+        public ActionResult SaveReview(string courseId, string peerAssasmentId, ReviewModel review)
         {
-            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
-            var user = User.Identity;
-            var answerId = new AnswerId
-            {
-                UserId = user.GetUserId(),
-                CourseId = courseId,
-                SlideId = peerAssasmentId
-            };
-            answerRepository.UpdateAnswerBy(answerId, proposition);
-            answerRepository.GetOrCreate(answerId, true);
-            return RedirectToAction("Slide", "Course", new { courseId, slideIndex = peerAssasmentId });
-        }
+            var peerAssasment = GetPeerAssasment(courseId, peerAssasmentId); //todo нафигачить Init()
+            var state = GetState(peerAssasment);
+            var answerRepository = createAnswerRepository2(peerAssasment, state);
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
-        {
-            var answerRepository = createAnswerRepository(courseId, peerAssasmentId);
             var user = User.Identity;
             var answerId = new AnswerId
             {
@@ -94,19 +78,37 @@ namespace uLearn.Web.Controllers
                 SlideId = peerAssasmentId
             };
             answerRepository.UpdateAnswerBy(answerId, review);
+            var answer = createAnswerRepository2(peerAssasment, state).GetOrCreate(answerId);
 
-//            var answer = answerRepository.GetOrCreate(answerId);
-            ViewBag.CourseId = answerId.CourseId;
-            ViewBag.PeerAssasmentId = answerId.SlideId;
+            return Json(answer.Review);
+        }
 
-            return Json("Test!");
+        [HttpPost]
+        [Authorize]
+        public ActionResult SubmitReview(string courseId, string peerAssasmentId, ReviewModel review)
+        {
+            var peerAssasment = GetPeerAssasment(courseId, peerAssasmentId); //todo нафигачить Init()
+            var state = GetState(peerAssasment);
+            var answerRepository = createAnswerRepository2(peerAssasment, state);
+
+            var user = User.Identity;
+            var answerId = new AnswerId
+            {
+                UserId = user.GetUserId(),
+                CourseId = courseId,
+                SlideId = peerAssasmentId
+            };
+            answerRepository.UpdateAnswerBy(answerId, review, true);
+            var answer = createAnswerRepository2(peerAssasment, state).GetOrCreate(answerId);
+
+            return Json(answer.Review);
         }
 
         [HttpGet]
         [Authorize]
         public ActionResult SetState(PeerAssasmentStepType step, string courseId, string slideId)
         {
-            var answerRepository = createAnswerRepository(courseId, slideId);
+            var answerRepository = createAnswerRepository(courseId, slideId, PeerAssasmentStepType.Undefined);
             var userId = User.Identity.GetUserId();
             var initializer = new TestInitializer(answerRepository, courseId, slideId, userId);
 

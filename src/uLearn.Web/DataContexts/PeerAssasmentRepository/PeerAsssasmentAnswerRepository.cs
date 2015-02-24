@@ -11,18 +11,22 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 {
     public class PeerAsssasmentAnswerRepository : IPeerAsssasmentAnswerRepository
     {
+        private readonly PeerAssasment peerAssasment;
+        private readonly PeerAssasmentStepType step;
         private readonly IPeerAssasmentStorage storage;
         private readonly IPeerAssasmentAnswerModelBuilder modelBuilder;
         private readonly IPeerAssasmentAnswerUpdater answerUpdater;
         private readonly IPeerAssasmentReviewManager reviewManager;
 
-        public PeerAsssasmentAnswerRepository(PeerAssasment peerAssasment)
+        public PeerAsssasmentAnswerRepository(PeerAssasment peerAssasment, PeerAssasmentStepType step)
             : this(
                 new PeerAssasmentStorage(),
                 new PeerAssasmentAnswerModelBuilder(peerAssasment),
                 new PeerAssasmentAnswerUpdater(),
                 new PeerAssasmentReviewManager())
         {
+            this.peerAssasment = peerAssasment;
+            this.step = step;
         }
 
         private PeerAsssasmentAnswerRepository(
@@ -45,17 +49,19 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             InnerUpdate(answerId, ans => answerUpdater.Update(ans, proposition));
         }
 
-        public void UpdateAnswerBy(AnswerId answerId, ReviewModel review)
+        public void UpdateAnswerBy(AnswerId answerId, ReviewModel review, bool isSubmit = false)
         {
             if (review == null)
                 throw new ArgumentNullException("review");
 
-            InnerUpdate(answerId, ans => answerUpdater.Update(ans, review));
+            var answer = InnerUpdate(answerId, ans => answerUpdater.Update(ans, review));
+            if (isSubmit && step == PeerAssasmentStepType.Review && answer.Reviews.Count < peerAssasment.ReviewCnt)
+                AssignReview(answer).SucceedsWith(x => x);
         }
 
-        private void InnerUpdate(AnswerId answerId, Func<Answer, Answer> update)
+        private Answer InnerUpdate(AnswerId answerId, Func<Answer, Answer> update)
         {
-            InnerRead(answerId)
+            return InnerRead(answerId)
                 .SucceedsWith(r =>
                     r.Length == 0
                         ? default(Answer).MarkAsFail(new AnswerWithIdDoesntExistException(answerId))
@@ -65,35 +71,48 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 .SucceedsWith(x => x);
         }
 
-        public AnswerModel GetOrCreate(AnswerId answerId, bool needNewReview = false)
+        public AnswerModel GetOrCreate(AnswerId answerId)
         {
             return InnerRead(answerId)
                 .SucceedsWith(answers =>
                     answers.Length != 0
                         ? answers.Last().MarkAsSuccess()
                         : CreateNewAnswer(answerId))
-                .SucceedsWith(answer => AssignReviewIfNeed(needNewReview, answer))
+                .SucceedsWith(answer => AssignReviewIfNeed(IsNeedFirstReview(answer), answer))
                 .SucceedsWith(tuple => modelBuilder.Build(tuple.Item2, tuple.Item1));
         }
 
+        private bool IsNeedFirstReview(Answer answer)
+        {
+            return step == PeerAssasmentStepType.Review && (answer.Reviews == null || answer.Reviews.Count == 0);
+        }
+
+
         private Result<Tuple<bool, Answer>> AssignReviewIfNeed(bool needNewReview, Answer answer)
         {
-            if (needNewReview)
-            {
-                return reviewManager.AssignReview(answer)
-                    .IfSuccess(tuple =>
-                    {
-                        if (tuple.Item1)
-                        {
-                            var res = storage.TryUpdate(tuple.Item2);
-                            if (res != null && res.IsFail)
-                                return tuple.MarkAsFail(res.FailMessage);
-                        }
-                        return tuple.MarkAsSuccess();
-                    });
-            }
+            return needNewReview 
+                ? AssignReview(answer) 
+                : new Tuple<bool, Answer>(true, answer).MarkAsSuccess();
+        }
 
-            return new Tuple<bool, Answer>(true, answer).MarkAsSuccess();
+        private Result<Tuple<bool, Answer>> AssignReview(Answer answer)
+        {
+            return reviewManager.AssignReview(answer)
+                .IfSuccess(tuple =>
+                {
+                    Answer newAnswer = null;
+                    if (tuple.Item1)
+                    {
+                        var res = storage.TryUpdate(tuple.Item2);
+                        if (res.IsFail)
+                        {
+                            return tuple.MarkAsFail(res.FailMessage);
+                        }
+                        newAnswer = new PeerAssasmentStorage().TryRead<Answer>(x => x.CourseId == tuple.Item2.CourseId && x.SlideId == tuple.Item2.SlideId && x.UserId == tuple.Item2.UserId)
+                            .Value.Last();
+                    }
+                    return (new Tuple<bool, Answer>(tuple.Item1, newAnswer)).MarkAsSuccess();
+                });
         }
 
         private Result<Answer[]> InnerRead(AnswerId answerId)

@@ -15,6 +15,9 @@ namespace uLearn.PeerAssasments
         [XmlElement("proposition")]
         public string Proposition;
 
+        [XmlElement("reviewCnt")]
+        public int ReviewCnt { get; set; }
+
         [XmlElement("step")]
         public PeerAssasmentStep[] Steps;
 

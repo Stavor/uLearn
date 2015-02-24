@@ -46,11 +46,10 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 answer.Reviews.Add(new Review
                 {
                     PropositionForReviewId = answerForReview.PropositionId,
-                    PropositionForReview = answerForReview.Proposition
                 });
                 assigned = true;
             }
-            
+
             return (new Tuple<bool, Answer>(assigned, answer)).MarkAsSuccess();
         }
     }

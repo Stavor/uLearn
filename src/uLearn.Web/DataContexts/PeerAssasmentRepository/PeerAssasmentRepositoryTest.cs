@@ -18,7 +18,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
 
             AppDomain.CurrentDomain.SetData("DataDirectory", appDataDirectory);
 
-            repository = new PeerAsssasmentAnswerRepository(new PeerAssasment());
+            repository = new PeerAsssasmentAnswerRepository(new PeerAssasment(), PeerAssasmentStepType.Undefined);
             CleanAllDatas();
             CheckCorrectAnswerModel(new AnswerModel(), repository.GetOrCreate(answerId));
         }
@@ -62,7 +62,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             {
                 Text = "А тут текст Review"
             };
-            repository.GetOrCreate(answerId, true);            
+            repository.GetOrCreate(answerId);            
             repository.UpdateAnswerBy(answerId, review);
             var expectedAnswer = new AnswerModel
             {
