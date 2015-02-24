@@ -4,6 +4,7 @@
 @{
     var param = new { courseId = ViewBag.CourseId, peerAssasmentId = ViewBag.PeerAssasmentId };
     var updateTargetId = "reviewId";
+    var isHidden = Model.ReviewCnt == 0;
     var submit = new PostActionButtonModel
     {
         PostUrl = Url.Action("SubmitReview", "PeerAssasment", param),
@@ -20,47 +21,44 @@
     };
 }
 
-@if (Model.ReviewCnt != 0)
-{
-    <div id="@save.UpdateTargetId">
-        <div>Осталось <span id ="reviewCnt">@Model.ReviewCnt</span> ревью</div>
-        <p>Тезис:</p>
-        <span id="other-proposition">@Html.Raw(Model.TextForReview)</span>
-        <p>Ревью:</p>
-        @using (Html.BeginForm())
+<div id="@save.UpdateTargetId" hidden="@isHidden">
+    <div>Осталось <span id ="reviewCnt">@Model.ReviewCnt</span> ревью</div>
+    <p>Тезис:</p>
+    <span id="other-proposition">@Html.Raw(Model.TextForReview)</span>
+    <p>Ревью:</p>
+    @using (Html.BeginForm())
+    {
+        @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
         {
-            @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>
-            {
-                { "id", "review-text" },
-                { "class", "markdown-input" }
-            })
-            <p>Оцените:</p>
+            { "id", "review-text" },
+            { "class", "markdown-input" }
+        })
+        <p>Оцените:</p>
 
-            for (var i = 0; i < Model.Marks.Length; i++)
-            {
-                <div class="mark">
-                    @{
-                        var len = Model.Marks[i].MaxMark - Model.Marks[i].MinMark + 1;
-                        var items = new SelectListItem[len];
-                        for (var l = 0; l < len; l++)
+        for (var i = 0; i < Model.Marks.Length; i++)
+        {
+            <div class="mark">
+                @{
+                    var len = Model.Marks[i].MaxMark - Model.Marks[i].MinMark + 1;
+                    var items = new SelectListItem[len];
+                    for (var l = 0; l < len; l++)
+                    {
+                        var current = (Model.Marks[i].MinMark + l).ToString();
+                        items[l] = new SelectListItem
                         {
-                            var current = (Model.Marks[i].MinMark + l).ToString();
-                            items[l] = new SelectListItem
-                            {
-                                Text = current,
-                                Selected = current == Model.Marks[i].Mark,
-                                Value = current
-                            };
-                        }
+                            Text = current,
+                            Selected = current == Model.Marks[i].Mark,
+                            Value = current
+                        };
                     }
-                    <div>@Html.Raw(Model.Marks[i].Criterion)</div>
-                    @Html.TextBoxFor(x => x.Marks[i].Criterion, new { hidden = true})
-                    @Html.DropDownListFor(x => x.Marks[i].Mark, items, new Dictionary<string, object>{{"class", "value"}})
-                </div>
-            }
-
-            @Html.PostActionButtonFor(save)
-            @Html.PostActionButtonFor(submit)
+                }
+                <div>@Html.Raw(Model.Marks[i].Criterion)</div>
+                @Html.TextBoxFor(x => x.Marks[i].Criterion, new { hidden = true })
+                @Html.DropDownListFor(x => x.Marks[i].Mark, items, new Dictionary<string, object> { { "class", "value" } })
+            </div>
         }
-    </div>
-}
+
+        @Html.PostActionButtonFor(save)
+        @Html.PostActionButtonFor(submit)
+    }
+</div>
