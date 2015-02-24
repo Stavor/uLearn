@@ -97,7 +97,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 ? null
                 : new PropositionModel
                 {
-                    IsReadonly = answer.Reviews != null,
+                    IsReadonly = answer.Reviews != null && answer.Reviews.Count != 0,
                     Text = answer.Proposition.Text,
                     RenderedText = answer.Proposition.Text.RenderMd()
                 };
