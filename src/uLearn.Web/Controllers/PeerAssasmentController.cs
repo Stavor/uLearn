@@ -98,6 +98,7 @@ namespace uLearn.Web.Controllers
                 CourseId = courseId,
                 SlideId = peerAssasmentId
             };
+            review.WasSubmit = true;
             answerRepository.UpdateAnswerBy(answerId, review, true);
             var answer = createAnswerRepository2(peerAssasment, state).GetOrCreate(answerId);
 

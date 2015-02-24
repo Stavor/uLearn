@@ -33,6 +33,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 throw new Exception("ѕользователю не назначено ниодного ревью.");
 
             ans.Reviews.Last().Text = review.Text;
+            ans.Reviews.Last().WasSubmit = review.WasSubmit;
             foreach (var newMark in (review.Marks ?? new MarkModel[0]))
             {
                 var isNew = true;

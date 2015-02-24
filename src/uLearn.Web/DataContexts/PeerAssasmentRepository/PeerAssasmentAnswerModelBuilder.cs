@@ -65,7 +65,8 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             return new ReviewModel
             {
                 IsNotAssign = assignNotFail,
-                ReviewCnt = peerAssasment.ReviewCnt - reviewsArr.Length + 1,
+                WasSubmit = reviewData.WasSubmit,
+                ReviewCnt = peerAssasment.ReviewCnt - reviewsArr.Length + 1 - (reviewData.WasSubmit ? 1 : 0),
                 TextForReview = (reviewData.PropositionForReview ?? new Proposition()).Text.RenderMd(), //todo странное условие
                 Text = reviewData.Text,
                 Marks = BuildMarks(reviewData.Marks ?? new Mark[0])

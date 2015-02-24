@@ -12,6 +12,8 @@ namespace uLearn.Web.Models.PeerAssasmentModels.DAL
 
         public int ReviewId { get; set; }
 
+        public bool WasSubmit { get; set; }
+
         public int PropositionForReviewId { get; set; }
 
         public string Text { get; set; }
