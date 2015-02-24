@@ -53,10 +53,12 @@ namespace uLearn.Web.Controllers
             repo.GetOrCreate(answerId);
             repo.UpdateAnswerBy(answerId, new ReviewModel
             {
-                Text = review, Marks = new[]
+                Text = review,
+                WasSubmit = true,
+                Marks = new[]
                 {
-                    new MarkModel { Criterion = "Важная оценка", Mark = "3"},
-                    new MarkModel { Criterion = "Инетерстность", Mark = "2"},
+                    new MarkModel { Criterion = peerAssasment.Marks.Mark[0].Criterion, Mark = "3" },
+                    new MarkModel { Criterion = peerAssasment.Marks.Mark[1].Criterion, Mark = "2" },
                 }
             }, true);
         }
