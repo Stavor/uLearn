@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201502222032135_pampam1.Designer.cs">
       <DependentUpon>201502222032135_pampam1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502241126313_trash migr.cs" />
+    <Compile Include="Migrations\201502241126313_trash migr.Designer.cs">
+      <DependentUpon>201502241126313_trash migr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\PeerAssasmentModels\ActionButtonModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\ObserveModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\OperationResult.cs" />
@@ -493,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502222032135_pampam1.resx">
       <DependentUpon>201502222032135_pampam1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502241126313_trash migr.resx">
+      <DependentUpon>201502241126313_trash migr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
