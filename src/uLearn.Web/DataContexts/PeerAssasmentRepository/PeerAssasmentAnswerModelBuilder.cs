@@ -17,7 +17,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             this.peerAssasment = peerAssasment;
         }
 
-        public AnswerModel Build(Answer answer, bool assignNotFail)
+        public AnswerModel Build(Answer answer, Review[] ansverPropreviews, bool assignNotFail)
         {
             return new AnswerModel
             {
@@ -28,7 +28,26 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                     SlideId = answer.SlideId,
                 },
                 Proposition = BuildPropositon(answer),
-                Review = BuildReview(answer.Reviews, assignNotFail)
+                Review = BuildReview(answer.Reviews, assignNotFail),
+                Observe = BuildObserve(ansverPropreviews)
+            };
+        }
+
+        private ObserveModel BuildObserve(Review[] ansverPropreviews)
+        {
+            if (ansverPropreviews == null)
+                return null;
+            return new ObserveModel
+            {
+                Reviews = ansverPropreviews.Select(x => new ReviewFoObserve
+                {
+                    RenderedText = x.Text.RenderMd(),
+                    Marks = (x.Marks ?? new Mark[0]).Select(m => new MarkModel
+                    {
+                        Criterion = m.Criterion,
+                        Mark = m.Value
+                    }).ToArray()
+                }).ToArray()
             };
         }
 

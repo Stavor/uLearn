@@ -250,6 +250,7 @@
       <DependentUpon>201502222032135_pampam1.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\PeerAssasmentModels\ActionButtonModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\ObserveModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\OperationResult.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
     <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\PeerAssasmentModels\MarkModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\PostActionButtonModel.cs" />
     <Compile Include="Models\PeerAssasmentModels\PropositionModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\ReviewFoObserve.cs" />
     <Compile Include="Models\PeerAssasmentModels\ReviewModel.cs" />
     <Compile Include="DataContexts\TextsRepo.cs" />
     <Compile Include="Migrations\201411140847550_extract large text fields.cs" />
@@ -1033,6 +1035,7 @@
     <Content Include="Views\PeerAssasment\PostActionButtonView.cshtml" />
     <Content Include="Views\PeerAssasment\ReviewView.cshtml" />
     <Content Include="Views\PeerAssasment\SubmitView.cshtml" />
+    <Content Include="Views\PeerAssasment\ObserveView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

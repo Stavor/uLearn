@@ -66,7 +66,8 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                     r.Length == 0
                         ? default(Answer).MarkAsFail(new AnswerWithIdDoesntExistException(answerId))
                         : r.Last().MarkAsSuccess())
-                .SucceedsWith(ans => SaftyExecutor.TryMake(ans, update, "Во премя обновления ответа произошла ошибка."))
+                .SucceedsWith(ans => 
+                    SaftyExecutor.TryMake(ans, update, "Во премя обновления ответа произошла ошибка."))
                 .SucceedsWith(ans => storage.TryUpdate(ans))
                 .SucceedsWith(x => x);
         }
@@ -79,7 +80,18 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                         ? answers.Last().MarkAsSuccess()
                         : CreateNewAnswer(answerId))
                 .SucceedsWith(answer => AssignReviewIfNeed(IsNeedFirstReview(answer), answer))
-                .SucceedsWith(tuple => modelBuilder.Build(tuple.Item2, tuple.Item1));
+                .SucceedsWith(answer => GetObserveIfNeed(answer))
+                .SucceedsWith(tuple => modelBuilder.Build(tuple.Item2, tuple.Item3, tuple.Item1));
+        }
+
+        private Result<Tuple<bool, Answer, Review[]>> GetObserveIfNeed(Tuple<bool, Answer> prevRes)
+        {
+            if (step != PeerAssasmentStepType.Observe)
+                return new Tuple<bool, Answer, Review[]>(prevRes.Item1, prevRes.Item2, null).MarkAsSuccess();
+            var res = storage.TryRead<Review>(x => x.PropositionForReviewId == prevRes.Item2.PropositionId);
+            if (res.IsFail)
+                new Tuple<bool, Answer, Review[]>(prevRes.Item1, prevRes.Item2, null).MarkAsFail(new Exception("Не получилось вычитать review!"));
+            return new Tuple<bool, Answer, Review[]>(prevRes.Item1, prevRes.Item2, res.Value).MarkAsSuccess();
         }
 
         private bool IsNeedFirstReview(Answer answer)

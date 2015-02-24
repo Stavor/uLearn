@@ -1,0 +1,15 @@
+﻿@using uLearn.Web.Models.PeerAssasmentModels
+@model uLearn.Web.Models.PeerAssasmentModels.ObserveModel
+           
+@foreach (var review in (Model.Reviews ?? new ReviewFoObserve[0]))
+{
+    <div>
+        <div>@Html.Raw(review.RenderedText)</div>
+        @foreach (var mark in review.Marks)
+        {
+            <div>
+                @mark.Criterion: @mark.Mark
+            </div>
+        }
+    </div>
+}
