@@ -1,6 +1,7 @@
 ﻿@using uLearn.Web.Models.PeerAssasmentModels
 @model uLearn.Web.Models.PeerAssasmentModels.ObserveModel
-           
+
+Ревью на вас:
 @foreach (var review in (Model.Reviews ?? new ReviewFoObserve[0]))
 {
     <div>
@@ -12,4 +13,5 @@
             </div>
         }
     </div>
+    <hr/>
 }
