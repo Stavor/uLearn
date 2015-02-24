@@ -13,10 +13,10 @@
 }
 <div id=@save.UpdateTargetId>
     <p>Ваш тезис:</p>
-    <div id="readonly-view" >
+    <div id="readonly-view">
         <span id="readonly-proposition">@Html.Raw(Model.RenderedText)</span>
     </div>
-    <div id="editing-view" >
+    <div id="editing-view" hidden="@Model.IsReadonly">
         @using (Html.BeginForm())
         {
             @Html.TextAreaFor(model => model.Text, new Dictionary<string, object>

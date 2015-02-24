@@ -27,7 +27,7 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                     CourseId = answer.CourseId,
                     SlideId = answer.SlideId,
                 },
-                Proposition = BuildPropositon(answer.Proposition),
+                Proposition = BuildPropositon(answer),
                 Review = BuildReview(answer.Reviews, assignNotFail)
             };
         }
@@ -72,14 +72,15 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                 }).ToArray();
         }
 
-        private static PropositionModel BuildPropositon(Proposition proposition)
+        private static PropositionModel BuildPropositon(Answer answer)
         {
-            return proposition == null
+            return answer.Proposition == null
                 ? null
                 : new PropositionModel
                 {
-                    Text = proposition.Text,
-                    RenderedText = proposition.Text.RenderMd()
+                    IsReadonly = answer.Reviews != null,
+                    Text = answer.Proposition.Text,
+                    RenderedText = answer.Proposition.Text.RenderMd()
                 };
         }
     }

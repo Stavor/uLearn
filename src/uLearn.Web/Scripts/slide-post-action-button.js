@@ -57,6 +57,7 @@ function reloadReviewBeforeSave(context, param) {
     var editor = textarea.codeMirrorEditor;
     editor.getDoc().setValue(param.Text == null ? "" : param.Text);
     context.find("#reviewCnt").html(param.ReviewCnt);
+    $("editing-view", context).attr("hidden", param.IsReadonly);
 }
 
 function reloadReviewBeforeSubmit(context, param) {
