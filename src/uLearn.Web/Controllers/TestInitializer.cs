@@ -8,20 +8,16 @@ namespace uLearn.Web.Controllers
 {
     public class TestInitializer
     {
-        private IPeerAsssasmentAnswerRepository repository;
-        private readonly string courseId;
-        private readonly string slideId;
         private readonly string userId;
+        private readonly string courseId;
 
-        public TestInitializer(IPeerAsssasmentAnswerRepository repository, string courseId, string slideId, string userId)
+        public TestInitializer(string userId, string courseId)
         {
-            this.repository = repository;
-            this.courseId = courseId;
-            this.slideId = slideId;
             this.userId = userId;
+            this.courseId = courseId;
         }
 
-        public void InitializeFor(PeerAssasmentStepType stepType)
+        public void InitializeFor(PeerAssasmentStepType stepType, PeerAssasment peerAssasment)
         {
             CleanAllDatas();
             switch (stepType)
@@ -29,75 +25,76 @@ namespace uLearn.Web.Controllers
                 case PeerAssasmentStepType.PropositionWriting:
                     break;
                 case PeerAssasmentStepType.Review:
-                    InitializeForReview();
+                    InitializeForReview(peerAssasment);
                     break;
                 case PeerAssasmentStepType.Observe:
-                    InitializeForObserve();
+                    InitializeForObserve(peerAssasment);
                     break;
             }
         }
 
-        private void InitializeForObserve()
+        private void InitializeForObserve(PeerAssasment peerAssasment)
         {
-            SavePropositions();
+            var repo = new PeerAsssasmentAnswerRepository(peerAssasment, PeerAssasmentStepType.Review);
+            SavePropositions(repo, peerAssasment);
+            SaveReview(peerAssasment, repo, userId, "Да все ебланы! А остальные гандоны!");
+            SaveReview(peerAssasment, repo, userId, "Да все ебланы! А остальные гандоны!");
 
-            SaveReview(userId, "Да все ебланы! А остальные гандоны!");
-            SaveReview(userId, "Да все ебланы! А остальные гандоны!");
-
-            SaveReview("Катериада", "А цитата то не точная! А за что?");
-            SaveReview("Катериада", "А цитата то не точная! А за что?");
-
-            SaveReview("Галатея", "Нытьё, нытьё, нытьё");
-            SaveReview("Галатея", "Нытьё, нытьё, нытьё");
+            SaveReview(peerAssasment, repo, "Катериада", "А цитата то не точная! А за что?");
+            SaveReview(peerAssasment, repo, "Катериада", "А цитата то не точная! А за что?");
+ 
+            SaveReview(peerAssasment, repo, "Галатея", "Нытьё, нытьё, нытьё");
+            SaveReview(peerAssasment, repo, "Галатея", "Нытьё, нытьё, нытьё");
         }
 
-        private void SaveReview(string id, string review)
+        private void SaveReview(PeerAssasment peerAssasment, PeerAsssasmentAnswerRepository repo, string id, string review)
         {
-            var answerId = GetAnswerId(id);
-            repository.GetOrCreate(answerId);
-            repository.UpdateAnswerBy(answerId, new ReviewModel
+            var answerId = GetAnswerId(id, peerAssasment);
+            repo.GetOrCreate(answerId);
+            repo.UpdateAnswerBy(answerId, new ReviewModel
             {
                 Text = review, Marks = new[]
                 {
-                    new MarkModel { Criterion = "Важная оценка" },
-                    new MarkModel { Criterion = "Инетерстность" },
+                    new MarkModel { Criterion = "Важная оценка", Mark = "3"},
+                    new MarkModel { Criterion = "Инетерстность", Mark = "2"},
                 }
-            });
+            }, true);
         }
 
-        private void InitializeForReview()
+        private void InitializeForReview(PeerAssasment peerAssasment)
         {
-            SavePropositions();
-            repository.GetOrCreate(GetAnswerId(userId));
+            var repo = new PeerAsssasmentAnswerRepository(peerAssasment, PeerAssasmentStepType.PropositionWriting);
+            SavePropositions(repo, peerAssasment);
+            repo.GetOrCreate(GetAnswerId(userId, peerAssasment));
         }
 
-        private void SavePropositions()
+        private void SavePropositions(PeerAsssasmentAnswerRepository repo, PeerAssasment peerAssasment)
         {
-            SaveProposition("Катериада", "Все просрали еще в 2007. А потом наступила безысходность. В стране пиздец.");
-            SaveProposition("Галатея", "A может все потому, пиздец, что люди полные ебланы и гандоны.");
-            SaveProposition(userId, "Дай мошный бит, под который я буду бить лучшего друга.(с)");
+            SaveProposition(peerAssasment, repo, "Катериада", "Все просрали еще в 2007. А потом наступила безысходность. В стране пиздец.");
+            SaveProposition(peerAssasment, repo, "Галатея", "A может все потому, пиздец, что люди полные ебланы и гандоны.");
+            SaveProposition(peerAssasment, repo, userId, "Дай мошный бит, под который я буду бить лучшего друга.(с)");
         }
 
-        private void SaveProposition(string id, string proposition)
+        private void SaveProposition(PeerAssasment peerAssasment, PeerAsssasmentAnswerRepository repo, string id, string proposition)
         {
-            var answerId = GetAnswerId(id);
+            var answerId = GetAnswerId(id, peerAssasment);
 
             var propositionModel = new PropositionModel
             {
                 Text = proposition
             };
 
-            repository.GetOrCreate(answerId);
-            repository.UpdateAnswerBy(answerId, propositionModel);
+            repo.GetOrCreate(answerId);
+            repo.UpdateAnswerBy(answerId, propositionModel);
         }
 
-        private AnswerId GetAnswerId(string id)
+        private AnswerId GetAnswerId(string id, PeerAssasment peerAssasment)
         {
             return new AnswerId
             {
                 UserId = id,
                 CourseId = courseId,
-                SlideId = slideId
+                SlideId = peerAssasment.Id
             };
         }
         

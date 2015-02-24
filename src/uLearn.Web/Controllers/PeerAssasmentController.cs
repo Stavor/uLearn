@@ -108,11 +108,11 @@ namespace uLearn.Web.Controllers
         [Authorize]
         public ActionResult SetState(PeerAssasmentStepType step, string courseId, string slideId)
         {
-            var answerRepository = createAnswerRepository(courseId, slideId, PeerAssasmentStepType.Undefined);
+            var peerAssasment = GetPeerAssasment(courseId, slideId);
             var userId = User.Identity.GetUserId();
-            var initializer = new TestInitializer(answerRepository, courseId, slideId, userId);
+            var initializer = new TestInitializer(userId, courseId);
 
-            initializer.InitializeFor(step);
+            initializer.InitializeFor(step, peerAssasment);
             if (step != PeerAssasmentStepType.Undefined)
                 Response.Cookies.Add(new HttpCookie("peerAssasmentState", step.ToString()));
             else
