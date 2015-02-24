@@ -112,7 +112,6 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
             return reviewManager.AssignReview(answer)
                 .IfSuccess(tuple =>
                 {
-                    Answer newAnswer = null;
                     if (tuple.Item1)
                     {
                         var res = storage.TryUpdate(tuple.Item2);
@@ -120,10 +119,10 @@ namespace uLearn.Web.DataContexts.PeerAssasmentRepository
                         {
                             return tuple.MarkAsFail(res.FailMessage);
                         }
-                        newAnswer = new PeerAssasmentStorage().TryRead<Answer>(x => x.CourseId == tuple.Item2.CourseId && x.SlideId == tuple.Item2.SlideId && x.UserId == tuple.Item2.UserId)
+                        answer = new PeerAssasmentStorage().TryRead<Answer>(x => x.CourseId == tuple.Item2.CourseId && x.SlideId == tuple.Item2.SlideId && x.UserId == tuple.Item2.UserId)
                             .Value.Last();
                     }
-                    return (new Tuple<bool, Answer>(tuple.Item1, newAnswer)).MarkAsSuccess();
+                    return (new Tuple<bool, Answer>(tuple.Item1, answer)).MarkAsSuccess();
                 });
         }
 
