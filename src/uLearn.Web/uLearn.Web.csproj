@@ -211,6 +211,12 @@
     <Compile Include="Controllers\SlideNavigationController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HintController.cs" />
+    <Compile Include="Models\PeerAssasmentModels\AnswerId.cs" />
+    <Compile Include="Models\PeerAssasmentModels\AnswerModel.cs" />
+    <Compile Include="DataContexts\PeerAssasmentRepository\IPeerAsssasmentAnswerRepository.cs" />
+    <Compile Include="Models\PeerAssasmentModels\MarkModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\PropositionModel.cs" />
+    <Compile Include="Models\PeerAssasmentModels\ReviewModel.cs" />
     <Compile Include="DataContexts\TextsRepo.cs" />
     <Compile Include="Migrations\201411140847550_extract large text fields.cs" />
     <Compile Include="Migrations\201411140847550_extract large text fields.Designer.cs">
